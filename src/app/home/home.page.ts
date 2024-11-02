@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { WordpressService } from '../services/wordpress.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,18 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  posts: any;
+
+  constructor(private router:Router, private wordpressService:WordpressService) {}
+
+  ngOnInit(){
+    this.wordpressService.loadPosts().subscribe(data=>{
+      this.posts = data;
+      //console.log(data)
+    })
+  }
+  openPost(id: any){
+    this.router.navigate(['/post/', id])
+  }
 
 }

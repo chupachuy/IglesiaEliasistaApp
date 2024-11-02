@@ -1,20 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-header mode="ios">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title>
+        <div class="title">Iglesia Eliasista de México</div>
+      </ion-title>
+      <ion-buttons slot="start">
+        <ion-menu-button menu="main-menu"></ion-menu-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+  
+  <ion-content class="ion-padding">
+  
+    <!--<ion-button expand="block" class="ion-margin-button">
+      send notification to specific device
+    </ion-button>
+  
+    <ion-button expand="block">
+      Send notificacion to all devices
+    </ion-button>-->
+  
+  
+    <ion-card  *ngFor="let post of posts"  >
+      <ion-card-header (click)="openPost(post?.id)">
+         <ion-img [src]="post?.jetpack_featured_media_url" style="height: 520px;"></ion-img>
+        <ion-card-subtitle>{{post?.date}}</ion-card-subtitle>
+        <ion-card-title><h4 [innerHTML]="post?.title?.rendered"></h4></ion-card-title>
+      </ion-card-header>
+  
+      <ion-card-content (click)="openPost(post?.id)">
+        <div [innerHTML]="post?.excerpt?.rendered"></div>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  

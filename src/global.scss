@@ -24,3 +24,45 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+@import 'swiper/css/bundle';
+
+
+.large-text{
+    font-size: 20px;
+}
+
+p{
+    font-size: min(1.3rem, 24px);
+    color: #000;
+}
+
+
+h1{
+    font-size: 2rem;
+}
+
+ion-toolbar{
+    --background: #7590d6;
+    --background: linear-gradient(90deg, #7590d6 0%, #4d71d7);
+    --box-shadow: 0px 1px 10px rgba(98, 140, 255, 0.5);
+    --color: #fff;
+}
+
+
+ion-tabs{
+    ion-tab-bar, ion-tab-button{
+        background-color: #7590d6;
+    }
+       
+    ion-icon{
+         color: #fff;
+    }
+    label{
+        color: #fff;
+    }
+}
+
+ion-title{
+    margin-left: -50px;
+}

@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'iglesia-eliasista-v2',
+  appId: 'com.iglesiaeliasista.app',
+  appName: 'Iglesia Eliasista',
   webDir: 'www',
   server: {
     androidScheme: 'https'

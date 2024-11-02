@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><div [innerHTML]="post?.title?.rendered"></div></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="post != null">
+    <ion-card-header>
+       <ion-img [src]="post?.jetpack_featured_media_url" style="height: 520px;"></ion-img>
+      <ion-card-subtitle>{{post?.date}}</ion-card-subtitle>
+      <ion-card-title><h4 [innerHTML]="post?.title?.rendered"></h4></ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content >
+      <div [innerHTML]="post?.content?.rendered"></div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

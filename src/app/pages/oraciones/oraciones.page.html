@@ -1,0 +1,34 @@
+<ion-header [translucent]="true" mode="md">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Pedimento de oraciones</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-content>
+      <h1>Las oraciones para esta semana del 20 denoviembre al 27 de noviembre:</h1>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card *ngFor="let pray of Prayers; let iControl=index">
+    <ion-card-header>
+      <ion-card-title>{{pray.title_pray}}</ion-card-title>
+      <ion-card-subtitle>{{ pray.subject_pray}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <h3>{{ pray.description_pray }}</h3>
+      <h4>DE: {{ pray.pray_for}}</h4>
+      <h4>PARA: {{ pray.pray_to}}</h4>
+      <h4>DIA DE ORACIÓN: {{ pray.date_pray}}</h4>
+      <hr>
+      <div class="oracion">
+        {{ pray.lyrics_pray}}
+      </div>
+    </ion-card-content>
+  </ion-card>

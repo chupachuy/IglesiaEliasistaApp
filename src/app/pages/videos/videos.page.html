@@ -1,0 +1,36 @@
+<ion-header [translucent]="true" mode="md">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Videos eliaisistas</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" color="secondary">
+  <ion-card *ngFor="let video of videoUrl" mode="ios">
+    <ion-card-header>
+     <h2>{{video.title}}</h2>
+    </ion-card-header>
+    <ion-card-content>
+      <iframe [src]="showVideo(video.video)" width="100%"></iframe>
+      <div class="description">{{ video.description }}</div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+
+<!--<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon name="home"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button tab="radio">
+      <ion-icon name="information-circle"></ion-icon>
+    </ion-tab-button>
+    <ion-tab-button tab="library">
+      <ion-icon name="globe"></ion-icon>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>-->

@@ -1,0 +1,32 @@
+<ion-header [translucent]="true" mode="md">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Eventos</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-content>
+      <h1>Enterate ante que nadie de las diversos eventos  que tenemos para ti:</h1>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngFor="let evento of Eventos; let iControl=index">
+    <ion-img [src]="evento.image_url" alt="{{ evento.invitation}}"></ion-img>
+    <ion-card-header>
+      <ion-card-title>{{ evento.title }}</ion-card-title>
+      <ion-card-subtitle>{{ evento.invitation }}</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <h3>{{ evento.date_event }}</h3>
+      <h3>{{ evento.place}}</h3>
+      <p>{{ evento.hour_event}}</p>
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>

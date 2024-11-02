@@ -1,0 +1,15 @@
+.intro-back{
+    height: 100vh;
+    width: 100%;
+    background-color: #8BC6EC;
+    background-image: linear-gradient(129deg, #8BC6EC 0%, #9599E2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img{
+  width: 120px;
+}
+
+.scale-up-center{animation:scale-up-center 2.7s; } @keyframes scale-up-center{ 0%{transform:scale(.5)} 100%{transform:scale(1)} }
