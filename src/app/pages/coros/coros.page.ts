@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonRange, LoadingController } from '@ionic/angular';
-import { CorosService } from 'src/app/services/coros.service'; // Asegúrate de importar el servicio
+import { CorosService } from 'src/app/services/coros.service';
 import { Howl } from 'howler';
 
 export interface Track {
@@ -26,7 +26,7 @@ export class CorosPage implements OnInit {
 
   constructor(
     private loadingCtrl: LoadingController,
-    private corosService: CorosService // Asegúrate de inyectar el servicio
+    private corosService: CorosService // inyecta el servicio
   ) { }
 
   ngOnInit() {
