@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PrayersService } from 'src/app/services/prayers.service';
-import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-oraciones',
@@ -18,7 +17,14 @@ export class OracionesPage {
       console.log(respuesta);
       this.Prayers = respuesta;
     });
+    
 
   }
+  
+  /*isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }*/
 
 }

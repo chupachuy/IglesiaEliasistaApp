@@ -33,8 +33,7 @@
 }
 
 p{
-    font-size: min(1.3rem, 24px);
-    color: #000;
+    font-size: 2rem;
 }
 
 
@@ -65,4 +64,8 @@ ion-tabs{
 
 ion-title{
     margin-left: -50px;
+}
+
+.dark p, .dark ul, .dark ol {
+    color: #fff;
 }

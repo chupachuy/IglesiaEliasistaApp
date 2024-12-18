@@ -10,6 +10,7 @@ export class PredicasPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }
