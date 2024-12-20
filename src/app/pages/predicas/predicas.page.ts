@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PredicasService } from 'src/app/services/predicas.service';
 
 @Component({
   selector: 'app-predicas',
@@ -7,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PredicasPage implements OnInit {
 
-  constructor() { }
+  Predicas: any;
+
+  constructor(private servicePredicas:PredicasService) { }
 
   ngOnInit() {
-    
+    this.servicePredicas.obtenerPredicas().subscribe((respuesta:any) =>{
+      console.log(respuesta);
+      this.Predicas = respuesta;
+    });
   }
 
 }

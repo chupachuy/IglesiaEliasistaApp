@@ -16,27 +16,15 @@
         <p>La Gaceta Oficial Logos es el órgano de difusión oficial, doctrinal y cultural de toda la Iglesia, en sus líneas se da difusión a todos los eventos que se realizan, así como a los decretos, edictos y ordenanzas que emanen del Gran Hijo del Sol y las diferentes Jefaturas; hoy parte de su función es compartida con el sitio web de la Iglesia. Ipsa ab nam repellendus delectus voluptas cumque blanditiis?</p>
       </ion-text>
 
-        <ion-list>
+        <ion-list *ngFor="let gaceta of Gacetas; let iControl=index">
           <ion-item>
-            <ion-label>Pokémon Yellow</ion-label>
+            <ion-label>{{gaceta.name}}</ion-label>
             <ion-button href="https://iglesiaeliasista.org.mx/pdfs/gaceta-logos.pdf">
               <ion-icon slot="icon-only" onclick="alert('hola')" name="download"></ion-icon>
             </ion-button>
           </ion-item>
-          <ion-item>
-            <ion-label>Mega Man X</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>The Legend of Zelda</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Pac-Man</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
+
         </ion-list>
-    
     </ion-card-content>
   </ion-card>
 </ion-content>

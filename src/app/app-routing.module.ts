@@ -35,10 +35,10 @@ const routes: Routes = [
     path: 'videos',
     loadChildren: () => import('./pages/videos/videos.module').then( m => m.VideosPageModule)
   },
-  {
+  /*{
     path: 'predicas',
     loadChildren: () => import('./pages/predicas/predicas.module').then( m => m.PredicasPageModule)
-  },
+  },*/
   {
     path: 'devocionario',
     loadChildren: () => import('./pages/devocionario/devocionario.module').then( m => m.DevocionarioPageModule)
@@ -74,6 +74,10 @@ const routes: Routes = [
   {
     path: 'oraciones',
     loadChildren: () => import('./pages/oraciones/oraciones.module').then( m => m.OracionesPageModule)
+  },
+  {
+    path: 'predicas',
+    loadChildren: () => import('./pages/predicas/predicas.module').then( m => m.PredicasPageModule)
   },
 ];
 

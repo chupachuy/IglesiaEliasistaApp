@@ -26,4 +26,13 @@
 
     </ion-card-content>
   </ion-card>
+  <ion-card *ngFor="let hiperdulia of Hiperdulias; let iControl=index">
+    <ion-card-header>
+      <ion-card-title>{{hiperdulia.title}}</ion-card-title>
+      <ion-card-subtitle>{{hiperdulia.description}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <audio controls src="{{hiperdulia.url}}"></audio>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

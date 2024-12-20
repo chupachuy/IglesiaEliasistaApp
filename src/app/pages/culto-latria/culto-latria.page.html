@@ -26,8 +26,15 @@
       <p>Los días de gracia para cada Iglesia, son las albas en las cuales como su nombre lo dice, la gracia del Altísimo es mayor para ese Sello, en esas datas se gesta un gran beneficio y bendición, tanto para componentes, como para congregantes, por lo que es recomendable realizar el culto y repartir de esa gracia entre todos los que pertenecen a la Iglesia correspondiente; también en esas fechas, se pueden realizar las ceremonias importantes, los servicios religiosos y los trabajos espirituales que requieran de mayor fuerza; por lo que en los días de gracia de cada Iglesia, se debe esparcir entre todas las Tribus, Sellos y todos los seres necesitados, las gracias que el Altísimo ha depositado en ella. Con lo anterior, los atributos aunque son cualidades de cada Sello, se reparten entre toda la Iglesia Mexicana Elías y aún más allá.</p>
       <p>Sin embargo, se aclara que no sólo en los días de gracia se puede o se debe hacer liturgia del culto, pues es un ejercicio espiritual recomendable para su realización diaria y, en caso de tener vasta congregación y un número suficiente de sacerdotes, se puede ejecutar hasta varias veces en un mismo día.</p>
       <p>Escucha partes del Culto de Latría ahora:</p>
-        
-
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngFor="let latria of Latrias; let iControl=index">
+    <ion-card-header>
+      <ion-card-title>{{latria.name}}</ion-card-title>
+      <ion-card-subtitle>{{latria.description}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+  
     </ion-card-content>
   </ion-card>
 </ion-content>

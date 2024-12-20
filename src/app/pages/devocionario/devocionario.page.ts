@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DevocionarioService } from 'src/app/services/devocionario.service';
 
 @Component({
   selector: 'app-devocionario',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DevocionarioPage implements OnInit {
 
-  constructor() { }
+  Devocionarios: any;
+
+  constructor(private servicioDevocionarios:DevocionarioService) { }
 
   ngOnInit() {
+    this.servicioDevocionarios.obtenerDevocionarios().subscribe((respuesta: any) =>{
+      console.log(respuesta);
+      this.Devocionarios = respuesta;
+    });
   }
 
 }

@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <ion-card>
     <ion-card-content>
       <p>Veneración a la Santísima Trinidad Mesiánica y Humana. La palabra "dulía" viene del latín mediev. dulia y este del griego douleía (servidumbre).
@@ -18,7 +18,15 @@
         <p>Con esta celebración, reconocemos nuestra herencia como pueblo de Dios, en todas las eras y tiempos de la humanidad, ya que veneramos y alabamos el legado de los enviados y al acercarnos a ellos, pedimos de sus milagros e intercesión ante el Altísimo por cualquier causa.</p>
         <p>Conforme al Manifiesto para la Cofradía de los Emisarios Carmelitanos del Nuevo Carmelo, emitido por el Octavo Gran Hijo del Sol, en noviembre de 2023, los días de celebración del culto de dulía son los martes y sábados de cada semana, los días 3, 12 y 21 de cada mes y en las Ceremonias Magnas como la Semana Mayor Eliasista. </p>
         <p>Escucha partes del Culto de Hiperdulía ahora:</p>
-        
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngFor="let dulia of Dulias; let iControl=index">
+    <ion-card-header>
+      <ion-card-title>{{dulia.title}}</ion-card-title>
+      <ion-card-subtitle>{{dulia.descripcion}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <audio controls src="{{dulia.url}}"></audio>
     </ion-card-content>
   </ion-card>
 </ion-content>

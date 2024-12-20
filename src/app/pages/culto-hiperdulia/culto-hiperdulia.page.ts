@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HiperduliaService } from 'src/app/services/hiperdulia.service';
 
 @Component({
   selector: 'app-culto-hiperdulia',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CultoHiperduliaPage implements OnInit {
 
-  constructor() { }
+  Hiperdulias: any;
+
+  constructor(private serviceHiperdulias:HiperduliaService) { }
 
   ngOnInit() {
+    this.serviceHiperdulias.obtenerHiperdulias().subscribe((respuesta:any) => {
+      console.log(respuesta);
+      this.Hiperdulias = respuesta;
+    });
   }
 
 }
