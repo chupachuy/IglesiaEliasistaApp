@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
   <ion-card>
     <ion-card-content>
-      <h1>Las oraciones para esta semana del 20 denoviembre al 27 de noviembre:</h1>
+      <h1>Las oraciones</h1>
     </ion-card-content>
   </ion-card>
 
@@ -23,9 +23,9 @@
       </ion-card-header>
       <ion-card-content>
         <h3>{{ pray.description_pray }}</h3>
-        <h4>DE: {{ pray.pray_for}}</h4>
-        <h4>PARA: {{ pray.pray_to}}</h4>
-        <h4>DIA DE ORACIÓN: {{ pray.date_pray}}</h4>
+        <h4>DE: <strong>{{ pray.pray_for}}</strong></h4>
+        <h4>PARA: <strong>{{ pray.pray_to}}</strong></h4>
+        <h4>DIA DE ORACIÓN: <strong>{{ pray.date_pray}}</strong></h4>
         <hr>
         <p>{{pray.lyrics_pray}}</p>
         <hr>

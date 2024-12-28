@@ -13,9 +13,6 @@
       <p>El “Devocionario Eliasista” es un esfuerzo de la Iglesia Eliasista de México, por acercar a la congregación algunas de las oraciones y pedimentos que se realizan dentro de las ceremonias eliasistas, con el fin de que sean erigidas con el corazón, así como en cualquier momento y lugar en que se encuentren nuestros hermanos. </p>
     </ion-card-content>
   </ion-card>
-</ion-content>
-
-<ion-content>
   <ion-card *ngFor="let devocionario of Devocionarios; let iControl=index">
     <ion-card-header>
       <ion-card-title>{{devocionario.title}}</ion-card-title>
@@ -26,4 +23,3 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
-

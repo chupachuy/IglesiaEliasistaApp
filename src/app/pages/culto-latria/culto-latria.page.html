@@ -27,14 +27,18 @@
       <p>Sin embargo, se aclara que no sólo en los días de gracia se puede o se debe hacer liturgia del culto, pues es un ejercicio espiritual recomendable para su realización diaria y, en caso de tener vasta congregación y un número suficiente de sacerdotes, se puede ejecutar hasta varias veces en un mismo día.</p>
       <p>Escucha partes del Culto de Latría ahora:</p>
     </ion-card-content>
+    <ion-card-header>
+      <ion-card-title>Escucha partes del Culto de Latría ahora:</ion-card-title>
+    </ion-card-header>
   </ion-card>
+
   <ion-card *ngFor="let latria of Latrias; let iControl=index">
     <ion-card-header>
-      <ion-card-title>{{latria.name}}</ion-card-title>
+      <ion-card-title>{{latria.title}}</ion-card-title>
       <ion-card-subtitle>{{latria.description}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-  
+      <audio controls src="{{latria.url}}"></audio>
     </ion-card-content>
   </ion-card>
 </ion-content>

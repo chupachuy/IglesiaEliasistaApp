@@ -15,7 +15,7 @@ export class CultoLatriaPage {
   ngOnInit() {
     this.serviceLatria.obtenerLatrias().subscribe((response:any) =>{
       console.log(response);
-      this.serviceLatria = response;
+      this.Latrias = response;
     });
   }
 
