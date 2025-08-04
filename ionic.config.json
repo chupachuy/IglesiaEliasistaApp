@@ -1,0 +1,7 @@
+{
+  "name": "Iglesia Eliasista",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

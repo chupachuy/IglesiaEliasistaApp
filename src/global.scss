@@ -1,0 +1,75 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+@import 'swiper/css/bundle';
+
+
+.large-text{
+    font-size: 20px;
+}
+
+p{
+    font-size: 2rem;
+}
+
+
+h1{
+    font-size: 2rem;
+}
+
+audio{
+    width: 100%;
+}
+
+ion-toolbar{
+    --background: #7590d6;
+    --background: linear-gradient(90deg, #7590d6 0%, #4d71d7);
+    --box-shadow: 0px 1px 10px rgba(98, 140, 255, 0.5);
+    --color: #fff;
+}
+
+
+ion-tabs{
+    ion-tab-bar, ion-tab-button{
+        background-color: #7590d6;
+    }
+       
+    ion-icon{
+         color: #fff;
+    }
+    label{
+        color: #fff;
+    }
+}
+
+ion-title{
+    margin-left: -50px;
+}
+
+.dark p, .dark ul, .dark ol {
+    color: #fff;
+}
