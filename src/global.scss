@@ -32,13 +32,34 @@
     font-size: 20px;
 }
 
-p{
-    font-size: 2rem;
+.card-content-md p{
+    font-size: 1.2rem;
 }
 
+.item.sc-ion-label-md-h, .item .sc-ion-label-md-h {
+    font-size: 1.2rem;
+}
 
-h1{
-    font-size: 2rem;
+.ion-card-title{
+    color: #4d71d7;
+    font-size: 1.2rem;
+}
+
+ion-card-subtitle{
+    font-size: 1rem;
+}
+
+.card-content-md h3, .card-content-md h4, .card-content-md h5, .card-content-md h6 {
+    font-size: 1rem;
+}
+
+ion-card-content ul{
+    font-size: 1.2rem;
+}
+
+p{
+    color: #000;
+    font-size: 1.4rem;
 }
 
 audio{
