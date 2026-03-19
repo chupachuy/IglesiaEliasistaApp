@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { PRedicas } from './Predicas';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PredicasService {
 
-  API: string = 'https://iglesiaeliasista.org.mx/api/apipredicas/';
+  private readonly API = `${environment.apiUrl}/apipredicas/`;
 
-  constructor(private clientHttp:HttpClient) { }
+  constructor(private clientHttp: HttpClient) { }
 
-  obtenerPredicas(){
-    return this.clientHttp.get(this.API);
+  obtenerPredicas(): Observable<PRedicas[]> {
+    return this.clientHttp.get<PRedicas[]>(this.API).pipe(
+      catchError(err => {
+        console.error('Error al obtener predicas:', err);
+        return of([]);
+      })
+    );
   }
-
-
 }

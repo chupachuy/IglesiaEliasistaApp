@@ -1,49 +1,66 @@
-<ion-header [translucent]="true" mode="md">
-  <ion-toolbar>
+<ion-header class="ion-no-border" mode="md">
+  <ion-toolbar class="transparent-header">
     <ion-title class="ion-text-center">Coros Eliasistas</ion-title>
     <ion-buttons slot="start">
-      <ion-menu-button menu="main-menu"></ion-menu-button>
+      <ion-menu-button menu="main-menu" color="light"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <ion-list>
-    <ion-item button *ngFor="let track of playlist" (click)="start(track)">
-      <ion-label [color]="track == activeTrack ? 'dark' : 'light'">
-        <ion-icon *ngIf="track == activeTrack" slot="icon-only" name="volume-high"></ion-icon> {{ track.name }}
-      </ion-label>
-    </ion-item>
-  </ion-list>
+
+<ion-content class="premium-bg">
+  <div class="header-banner">
+    <div class="disc-animation" [class.spinning]="isPlaying">
+      <img src="assets/logo.jpg" alt="Coros Eliasistas">
+      <div class="disc-center"></div>
+    </div>
+  </div>
+
+  <div class="playlist-container">
+    <h3 class="section-title">Lista de Reproducción</h3>
+    <ion-list lines="none" class="transparent-list">
+      <ion-item class="track-item" *ngFor="let track of playlist" (click)="start(track)" [class.active-track]="track == activeTrack">
+        <div class="track-avatar" slot="start">
+          <ion-icon name="musical-notes"></ion-icon>
+        </div>
+        <ion-label>
+          <h2>{{ track.name }}</h2>
+          <p>Coro Eliasista</p>
+        </ion-label>
+        <ion-icon *ngIf="track == activeTrack && isPlaying" class="playing-icon" name="musical-notes" slot="end"></ion-icon>
+        <ion-icon *ngIf="track != activeTrack || !isPlaying" name="play-circle-outline" slot="end" class="inactive-icon"></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
 
-<ion-footer *ngIf="activeTrack">
-  <ion-toolbar color="light">
-    <ion-row>
-      <ion-col size="12" class="ion-text-center">
-        {{ activeTrack.name}}
-      </ion-col>
-      <ion-col size="12" class="ion-text-center">
-        <ion-range #range [(ngModel)]="progress" max="100" color="success" (touchend)="seek()" (mouseup)="seek()"></ion-range>
-      </ion-col>
-      <ion-col size="12" class="ion-text-center">
+<!-- Premium Floating Player -->
+<div class="floating-player-wrapper" *ngIf="activeTrack">
+  <div class="glass-player">
+    <div class="player-info">
+      <div class="player-text">
+        <div class="scrolling-text">
+            <h4>{{ activeTrack.name }}</h4>
+        </div>
+        <p>REPRODUCIENDO AHORA</p>
+      </div>
+    </div>
+    
+    <div class="player-progress">
+      <ion-range #range [(ngModel)]="progress" max="100" class="custom-range" (touchend)="seek()" (mouseup)="seek()"></ion-range>
+    </div>
 
-        <ion-button fill="clear"(click)="prev()" color="dark">
-          <ion-icon slot="icon-only" name="play-skip-back"></ion-icon>
-        </ion-button>
+    <div class="player-controls">
+      <ion-button fill="clear" (click)="prev()" class="ctrl-btn">
+        <ion-icon slot="icon-only" name="play-skip-back"></ion-icon>
+      </ion-button>
 
-        <ion-button fill="clear" (click)="togglePlayer(false)" *ngIf="!isPlaying" color="dark">
-          <ion-icon slot="icon-only" name="play"></ion-icon>
-        </ion-button>
+      <ion-button class="main-play" fill="clear" (click)="togglePlayer(isPlaying)">
+        <ion-icon slot="icon-only" [name]="isPlaying ? 'pause' : 'play'"></ion-icon>
+      </ion-button>
 
-        <ion-button fill="clear" (click)="togglePlayer(true)" *ngIf="isPlaying" color="dark">
-          <ion-icon slot="icon-only" name="stop"></ion-icon>
-        </ion-button>
-
-        <ion-button fill="clear" (click)="next()" color="dark">
-          <ion-icon slot="icon-only" name="play-skip-forward"></ion-icon>
-        </ion-button>
-
-      </ion-col>
-    </ion-row>
-  </ion-toolbar>
-</ion-footer>
+      <ion-button fill="clear" (click)="next()" class="ctrl-btn">
+        <ion-icon slot="icon-only" name="play-skip-forward"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</div>

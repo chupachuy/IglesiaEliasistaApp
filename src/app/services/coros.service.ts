@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Track } from '../pages/coros/coros.page';
 
 @Injectable({
@@ -9,18 +9,20 @@ import { Track } from '../pages/coros/coros.page';
 })
 export class CorosService {
 
-  //API: string = 'http://localhost/eliasistaapi/apicoros/';
-  API: string = 'https://iglesiaeliasista.org.mx/api/apicoros/';
+  private readonly API = `${environment.apiUrl}/apicoros/`;
 
-  constructor(private clientHttp: HttpClient) {}
+  constructor(private clientHttp: HttpClient) { }
 
-  // Modificar la función para que devuelva un Observable de Track[]
   obtenerCoros(): Observable<Track[]> {
-    return this.clientHttp.get<any[]>(this.API).pipe(
+    return this.clientHttp.get<{ title: string; url: string }[]>(this.API).pipe(
       map(coros => coros.map(coro => ({
-        name: coro.title,  // Se asigna el title a name
-        path: coro.url     // Se asigna el url a path
-      })))
+        name: coro.title,
+        path: coro.url
+      }))),
+      catchError(err => {
+        console.error('Error al obtener coros:', err);
+        return of([]);
+      })
     );
   }
 }

@@ -1,34 +1,52 @@
-<ion-header [translucent]="true" mode="md">
-  <ion-toolbar>
-    <ion-title class="ion-text-center">Pedimento de oraciones</ion-title>
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar class="glass-header">
+    <ion-title>Pedimento de Oraciones</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-card-content>
-      <h1>Las oraciones</h1>
-    </ion-card-content>
-  </ion-card>
-
-
-  <div class="prayer" *ngFor="let pray of Prayers; let iControl=index">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{pray.title_pray}}</ion-card-title>
-        <ion-card-subtitle>{{ pray.subject_pray}}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <h3>{{ pray.description_pray }}</h3>
-        <h4>DE: <strong>{{ pray.pray_for}}</strong></h4>
-        <h4>PARA: <strong>{{ pray.pray_to}}</strong></h4>
-        <h4>DIA DE ORACIÓN: <strong>{{ pray.date_pray}}</strong></h4>
-        <hr>
-        <p>{{pray.lyrics_pray}}</p>
-        <hr>
-      </ion-card-content>
-    </ion-card>
+  
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <div class="header-banner">
+    <div class="glass-panel info-panel">
+      <ion-icon name="heart-half-outline" class="info-icon"></ion-icon>
+      <p>Espacio dedicado a las oraciones y peticiones de la comunidad. Unidos en fe e intención, elevamos estas súplicas al Padre.</p>
+    </div>
   </div>
+
+  <div class="prayers-container">
+    <div class="prayer-card" *ngFor="let pray of prayers">
+      
+      <div class="prayer-header">
+        <h2 class="prayer-title">{{pray.title_pray}}</h2>
+        <span class="prayer-subject">{{pray.subject_pray}}</span>
+      </div>
+      
+      <h3 class="prayer-desc" *ngIf="pray.description_pray">{{pray.description_pray}}</h3>
+      
+      <div class="prayer-meta">
+        <div class="meta-item">
+          <ion-icon name="person-outline"></ion-icon>
+          <span><strong>De:</strong> {{pray.pray_for}}</span>
+        </div>
+        <div class="meta-item">
+          <ion-icon name="send-outline"></ion-icon>
+          <span><strong>Para:</strong> {{pray.pray_to}}</span>
+        </div>
+        <div class="meta-item">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span><strong>Día:</strong> {{pray.date_pray}}</span>
+        </div>
+      </div>
+      
+      <div class="prayer-lyrics">
+        <div class="quote-marks">❝</div>
+        <p>{{pray.lyrics_pray}}</p>
+        <div class="quote-marks right">❞</div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

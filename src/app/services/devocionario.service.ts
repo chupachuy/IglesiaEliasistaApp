@@ -1,17 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Devocionarios } from './Devocionarios';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DevocionarioService {
 
-  API: string = 'https://iglesiaeliasista.org.mx/api/apidevocionario/'
+  private readonly API = `${environment.apiUrl}/apidevocionario/`;
 
-  constructor(private clientHttp:HttpClient) { }
+  constructor(private clientHttp: HttpClient) { }
 
-  obtenerDevocionarios(){
-    return this.clientHttp.get(this.API);
+  obtenerDevocionarios(): Observable<Devocionarios[]> {
+    return this.clientHttp.get<Devocionarios[]>(this.API).pipe(
+      catchError(err => {
+        console.error('Error al obtener devocionarios:', err);
+        return of([]);
+      })
+    );
   }
-
 }

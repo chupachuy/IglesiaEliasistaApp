@@ -4,20 +4,20 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary: #0d2b56;
+  --ion-color-primary-rgb: 13, 43, 86;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #0b264c;
+  --ion-color-primary-tint: #254067;
 
   /** secondary **/
-  --ion-color-secondary: #589FFC;
-  --ion-color-secondary-rgb: 61, 194, 255;
+  --ion-color-secondary: #c99b4d;
+  --ion-color-secondary-rgb: 201, 155, 77;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #36abe0;
-  --ion-color-secondary-tint: #50c8ff;
+  --ion-color-secondary-shade: #b18844;
+  --ion-color-secondary-tint: #ceaa5f;
 
   /** tertiary **/
   --ion-color-tertiary: #5260ff;
@@ -241,6 +241,7 @@ html {
    * https://ionicframework.com/docs/layout/dynamic-font-scaling
    */
   --ion-dynamic-font: var(--ion-default-dynamic-font);
+  --ion-font-family: 'Outfit', sans-serif;
 }
 
 /* Ionic Variables and Theming. For more info, please see:

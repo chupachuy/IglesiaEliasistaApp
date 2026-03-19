@@ -1,10 +1,10 @@
-export class Prayers{
-     id!: Number;
-     title_pray!: String;
-     description_pray!: String;
-     subject_pray!: String;
-     pray_for!: String;
-     pray_to!: String;
-     date_pray!: String;
-     lyrics_pray!: String;
+export interface Prayer {
+  id: number;
+  title_pray: string;
+  description_pray: string;
+  subject_pray: string;
+  pray_for: string;
+  pray_to: string;
+  date_pray: string;
+  lyrics_pray: string;
 }

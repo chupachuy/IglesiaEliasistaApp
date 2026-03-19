@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Latrias } from './Latrias';
 
 @Injectable({
@@ -7,13 +9,16 @@ import { Latrias } from './Latrias';
 })
 export class LatriaService {
 
-  Latrias: any;
+  private readonly API = `${environment.apiUrl}/apilatria/`;
 
-  API: string = 'https://iglesiaeliasista.org.mx/api/apilatria/';
+  constructor(private httpClient: HttpClient) { }
 
-  constructor(private httpClient:HttpClient) { }
-
-  obtenerLatrias(){
-    return this.httpClient.get(this.API);
+  obtenerLatrias(): Observable<Latrias[]> {
+    return this.httpClient.get<Latrias[]>(this.API).pipe(
+      catchError(err => {
+        console.error('Error al obtener latrias:', err);
+        return of([]);
+      })
+    );
   }
 }

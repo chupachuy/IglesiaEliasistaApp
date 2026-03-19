@@ -1,32 +1,39 @@
-<ion-header [translucent]="true" mode="md">
-  <ion-toolbar>
-    <ion-title class="ion-text-center">Eventos</ion-title>
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar class="glass-header">
+    <ion-title>Próximos Eventos</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-card-content>
-      <h1>Enterate antes que nadie de las diversos eventos que tenemos para ti:</h1>
-    </ion-card-content>
-  </ion-card>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="header-banner">
+    <div class="glass-panel info-panel">
+      <ion-icon name="calendar-outline" class="info-icon"></ion-icon>
+      <p>Entérate antes que nadie de los diversos eventos, reuniones y ceremonias especiales que tenemos preparados para ti en nuestra comunidad.</p>
+    </div>
+  </div>
 
-  <ion-card *ngFor="let evento of Eventos; let iControl=index">
-    <ion-img [src]="evento.image_url" alt="{{ evento.invitation}}"></ion-img>
-    <ion-card-header>
-      <ion-card-title>{{ evento.title }}</ion-card-title>
-      <ion-card-subtitle>{{ evento.invitation }}</ion-card-subtitle>
-    </ion-card-header>
-  
-    <ion-card-content>
-      <h3>{{ evento.date_event }}</h3>
-      <h3>{{ evento.place}}</h3>
-      <p>{{ evento.hour_event}}</p>
-    </ion-card-content>
-  </ion-card>
-
-
+  <div class="events-container">
+    <ion-card class="event-card" *ngFor="let evento of eventos">
+      <div class="event-img-wrapper">
+        <ion-img class="event-img" [src]="evento.image_url || 'assets/logo.jpg'" alt="{{ evento.invitation }}"></ion-img>
+        <div class="date-badge">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>{{ evento.date_event }} | {{ evento.hour_event }}</span>
+        </div>
+      </div>
+      
+      <div class="event-content">
+        <h2 class="event-title">{{ evento.title }}</h2>
+        <span class="event-subtitle" *ngIf="evento.invitation">{{ evento.invitation }}</span>
+        
+        <div class="event-location">
+          <ion-icon name="location-outline"></ion-icon>
+          <p>{{ evento.place }}</p>
+        </div>
+      </div>
+    </ion-card>
+  </div>
 </ion-content>

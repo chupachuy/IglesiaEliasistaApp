@@ -1,17 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Evento } from './Eventos';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
 
-  // API: string = 'http://localhost/eliasistaapi/api'
-  API: string = 'https://iglesiaeliasista.org.mx/api/api/';
+  private readonly API = `${environment.apiUrl}/api/`;
 
-  constructor(private clientHttp:HttpClient) { }
+  constructor(private clientHttp: HttpClient) { }
 
-  obtenerEventos(){
-    return this.clientHttp.get(this.API);
+  obtenerEventos(): Observable<Evento[]> {
+    return this.clientHttp.get<Evento[]>(this.API).pipe(
+      catchError(err => {
+        console.error('Error al obtener eventos:', err);
+        return of([]);
+      })
+    );
   }
 }

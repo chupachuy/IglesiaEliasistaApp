@@ -1,15 +1,60 @@
-.intro-back{
+.intro-back {
     height: 100vh;
     width: 100%;
-    background-color: #8BC6EC;
-    background-image: linear-gradient(129deg, #8BC6EC 0%, #9599E2 100%);
+    /* Gradient azul premium (similar al menú) para mantener consistencia */
+    background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+
+    /* Brillo de fondo animado para dar profundidad (efecto glow) */
+    &::before {
+        content: "";
+        position: absolute;
+        width: 150vw;
+        height: 150vw;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 50%);
+        animation: pulseBg 4s infinite alternate ease-in-out;
+    }
 }
 
-img{
-  width: 120px;
+img {
+    width: 150px;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.3)); /* Sombra para resaltar la imagen */
+    position: relative;
+    z-index: 2;
 }
 
-.scale-up-center{animation:scale-up-center 2.7s; } @keyframes scale-up-center{ 0%{transform:scale(.5)} 100%{transform:scale(1)} }
+/* Animación de entrada fluida seguida de flotación continua */
+.scale-up-center {
+    animation: 
+        logoEntrance 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+        logoFloat 3.5s ease-in-out 1.5s infinite alternate;
+    opacity: 0;
+}
+
+/* Entrada: escala desde pequeño, sube un poco y aparece */
+@keyframes logoEntrance {
+    0% {
+        transform: scale(0.3) translateY(50px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Flotación suave y continua */
+@keyframes logoFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-12px); }
+}
+
+/* Pulso del brillo de fondo */
+@keyframes pulseBg {
+    0% { opacity: 0.4; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.1); }
+}

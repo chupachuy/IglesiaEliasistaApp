@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Prayer } from './Prayers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrayersService {
-  
-  //API: string = 'http://localhost/eliasistaapi/apiprayer/';
-  API: string = 'https://iglesiaeliasista.org.mx/api/apiprayer/';
 
-  constructor(private clientHttp:HttpClient) { }
-  
+  private readonly API = `${environment.apiUrl}/apiprayer/`;
 
-  getPrayers(){
-    return this.clientHttp.get(this.API);
+  constructor(private clientHttp: HttpClient) { }
+
+  getPrayers(): Observable<Prayer[]> {
+    return this.clientHttp.get<Prayer[]>(this.API).pipe(
+      catchError(err => {
+        console.error('Error al obtener oraciones:', err);
+        return of([]);
+      })
+    );
   }
-
-
 }

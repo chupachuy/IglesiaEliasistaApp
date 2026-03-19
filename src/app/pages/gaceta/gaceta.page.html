@@ -1,30 +1,36 @@
-<ion-header mode="md">
-  <ion-toolbar>
-    <ion-title>
-      <div class="ion-text-center">Gaceta Logos</div>
-    </ion-title>
+<ion-header mode="md" class="ion-no-border">
+  <ion-toolbar class="glass-header">
+    <ion-title>Gaceta Logos</ion-title>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+  
+<ion-content [fullscreen]="true" class="ion-padding">
+  
+  <div class="header-banner">
+    <div class="glass-panel info-panel">
+      <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+      <p>La Gaceta Oficial Logos es el órgano de difusión oficial, doctrinal y cultural de toda la Iglesia, en sus líneas se da difusión a todos los eventos que se realizan, así como a los decretos, edictos y ordenanzas que emanen del Gran Hijo del Sol y las diferentes Jefaturas.</p>
+    </div>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-card-content>
-      <ion-text color="dark" class="ion-margin">
-        <p>La Gaceta Oficial Logos es el órgano de difusión oficial, doctrinal y cultural de toda la Iglesia, en sus líneas se da difusión a todos los eventos que se realizan, así como a los decretos, edictos y ordenanzas que emanen del Gran Hijo del Sol y las diferentes Jefaturas; hoy parte de su función es compartida con el sitio web de la Iglesia. Ipsa ab nam repellendus delectus voluptas cumque blanditiis?</p>
-      </ion-text>
-
-        <ion-list *ngFor="let gaceta of Gacetas; let iControl=index">
-          <ion-item>
-            <ion-label>{{gaceta.name}}</ion-label>
-            <ion-button href="{{gaceta.url}}">
-              <ion-icon slot="icon-only" name="download"></ion-icon>
-            </ion-button>
-          </ion-item>
-
-        </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <div class="documents-container">
+    <h3 class="section-title">Últimas Ediciones</h3>
+    
+    <ion-list lines="none" class="transparent-list">
+      <ion-item class="document-tile" *ngFor="let gaceta of Gacetas">
+        <div class="icon-wrapper" slot="start">
+          <ion-icon name="document-text"></ion-icon>
+        </div>
+        <ion-label>
+          <h2>{{gaceta.name}}</h2>
+        </ion-label>
+        <ion-button slot="end" fill="clear" href="{{gaceta.url}}" target="_blank" class="download-btn">
+          <ion-icon name="download-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

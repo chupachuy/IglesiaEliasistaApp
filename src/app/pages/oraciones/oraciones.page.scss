@@ -1,0 +1,156 @@
+/* Header Glassmorphism */
+ion-header {
+  position: absolute;
+}
+.glass-header {
+  --background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  --border-width: 0;
+}
+.dark .glass-header {
+  --background: rgba(18, 18, 18, 0.75);
+}
+
+.header-banner {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+.info-panel {
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  
+  .info-icon {
+    font-size: 1.8rem;
+    color: var(--ion-color-danger); /* Resaltar con un rojo cálido / corazón */
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--ion-text-color, #333);
+    font-style: italic;
+  }
+}
+
+.prayers-container {
+  .prayer-card {
+    background: var(--ion-background-color, #fff);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 30px rgba(13, 43, 86, 0.08);
+    position: relative;
+    overflow: hidden;
+    border-top: 4px solid var(--ion-color-secondary);
+    
+    .prayer-header {
+      margin-bottom: 12px;
+      
+      .prayer-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--ion-color-primary);
+        margin: 0 0 6px 0;
+      }
+      
+      .prayer-subject {
+        display: inline-block;
+        background: rgba(201, 155, 77, 0.15);
+        color: var(--ion-color-secondary);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+    }
+    
+    .prayer-desc {
+      font-size: 1.05rem;
+      color: var(--ion-color-dark);
+      margin: 16px 0;
+      line-height: 1.5;
+    }
+    
+    .prayer-meta {
+      background: rgba(0,0,0,0.02);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.95rem;
+        color: var(--ion-color-medium);
+        
+        ion-icon {
+          font-size: 1.2rem;
+          color: var(--ion-color-primary-tint);
+        }
+        
+        strong {
+          color: var(--ion-color-dark);
+        }
+      }
+    }
+    
+    .prayer-lyrics {
+      position: relative;
+      margin-top: 24px;
+      padding: 20px;
+      background: radial-gradient(circle, rgba(201,155,77,0.05) 0%, transparent 100%);
+      border-radius: 16px;
+      
+      .quote-marks {
+        font-size: 2.5rem;
+        color: rgba(201, 155, 77, 0.3);
+        line-height: 0;
+        margin-top: 10px;
+        
+        &.right {
+          text-align: right;
+          margin-top: 30px;
+          margin-bottom: 10px;
+        }
+      }
+      
+      p {
+        margin: 0;
+        font-size: 1.15rem;
+        line-height: 1.7;
+        color: var(--ion-color-dark);
+        text-align: center;
+        white-space: pre-wrap; /* Respeta los saltos de línea de la oración */
+      }
+    }
+  }
+}
+
+.dark {
+  .info-panel p {
+    color: #e0e0e0;
+  }
+  .prayer-card {
+    background: #1e2023;
+    
+    .prayer-meta {
+      background: rgba(255,255,255,0.03);
+      strong { color: #f4f5f8; }
+    }
+    .prayer-lyrics p { color: #f4f5f8; }
+    .prayer-desc { color: #e0e0e0; }
+  }
+}

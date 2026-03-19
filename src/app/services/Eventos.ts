@@ -1,9 +1,9 @@
-export class Eventos {
-    id!: String;
-    invitation!: String;
-    title!: String;
-    date_event!: String;
-    place!: String;
-    hour_event!: String;
-    image_url!: String;
+export interface Evento {
+  id: string;
+  invitation: string;
+  title: string;
+  date_event: string;
+  place: string;
+  hour_event: string;
+  image_url: string;
 }

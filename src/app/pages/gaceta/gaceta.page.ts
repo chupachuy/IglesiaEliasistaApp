@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { GacetasService } from 'src/app/services/gacetas.service';
+import { Gacetas } from 'src/app/services/Gacetas';
 
 @Component({
   selector: 'app-gaceta',
@@ -8,16 +10,17 @@ import { GacetasService } from 'src/app/services/gacetas.service';
 })
 export class GacetaPage implements OnInit {
 
-  Gacetas: any;
+  Gacetas: Gacetas[] = [];
+  private destroyRef = inject(DestroyRef);
 
+  constructor(private serviceGacetas: GacetasService) { }
 
-  constructor(private serviceGacetas:GacetasService) { }
-
-  ngOnInit() {
-    this.serviceGacetas.obtenerGacetas().subscribe(( respuesta:any) =>{
-      console.log(respuesta);
-      this.Gacetas = respuesta;
-    });
+  ngOnInit(): void {
+    this.serviceGacetas.obtenerGacetas()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(respuesta => {
+        // Invertimos el arreglo para que las más recientes (últimos IDs) aparezcan primero
+        this.Gacetas = respuesta.reverse();
+      });
   }
-
 }

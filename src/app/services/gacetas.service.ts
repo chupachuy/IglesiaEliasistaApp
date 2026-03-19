@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Gacetas } from './Gacetas';
 
 @Injectable({
@@ -7,12 +9,16 @@ import { Gacetas } from './Gacetas';
 })
 export class GacetasService {
 
-  API: string = 'https://iglesiaeliasista.org.mx/api/apigacetas/'
+  private readonly API = `${environment.apiUrl}/apigacetas/`;
 
-  constructor( private clientHttp:HttpClient) { }
+  constructor(private clientHttp: HttpClient) { }
 
-  obtenerGacetas(){
-    return this.clientHttp.get(this.API);
+  obtenerGacetas(): Observable<Gacetas[]> {
+    return this.clientHttp.get<Gacetas[]>(this.API).pipe(
+      catchError(err => {
+        console.error('Error al obtener gacetas:', err);
+        return of([]);
+      })
+    );
   }
-
 }

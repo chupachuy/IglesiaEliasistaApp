@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Hiperdulias } from './Hiperdulia';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HiperduliaService {
 
-  Hiperdulias: any;
+  private readonly API = `${environment.apiUrl}/apihiperdulia/`;
 
-  API: string = 'https://iglesiaeliasista.org.mx/api/apihiperdulia/';
+  constructor(private clientHttp: HttpClient) { }
 
-  constructor(private clientHttp:HttpClient) { }
-
-  obtenerHiperdulias(){
-    return this.clientHttp.get(this.API);
+  obtenerHiperdulias(): Observable<Hiperdulias[]> {
+    return this.clientHttp.get<Hiperdulias[]>(this.API).pipe(
+      catchError(err => {
+        console.error('Error al obtener hiperdulias:', err);
+        return of([]);
+      })
+    );
   }
-
 }

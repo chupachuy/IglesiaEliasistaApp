@@ -1,0 +1,156 @@
+/* Header Glassmorphism */
+ion-header {
+  position: absolute;
+}
+
+.glass-header {
+  --background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  --border-width: 0;
+}
+
+.dark .glass-header {
+  --background: rgba(18, 18, 18, 0.75);
+}
+
+/* Hero Section */
+.hero-section {
+  padding: 100px 24px 40px;
+  background: linear-gradient(135deg, var(--ion-color-primary) 0%, var(--ion-color-primary-shade) 100%);
+  position: relative;
+  overflow: hidden;
+  border-bottom-left-radius: 36px;
+  border-bottom-right-radius: 36px;
+  box-shadow: 0 10px 30px rgba(13, 43, 86, 0.15);
+  
+  &::before {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(201,155,77,0.2) 0%, rgba(201,155,77,0) 70%);
+    top: -50px;
+    right: -50px;
+    border-radius: 50%;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    h1 {
+      color: #fff;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-top: 0;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.05rem;
+      max-width: 90%;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+}
+
+.feed-container {
+  padding: 0 8px;
+  margin-top: -20px; /* Overlaps hero section slightly */
+  position: relative;
+  z-index: 3;
+}
+
+/* Magazine Cards */
+.magazine-card {
+  border-radius: 20px;
+  margin: 0 8px 24px 8px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.06) !important;
+  
+  &:active {
+    transform: scale(0.97);
+  }
+
+  .img-wrapper {
+    position: relative;
+    height: 240px;
+    width: 100%;
+    
+    .post-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Gradient overlay to make badges pop */
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+    }
+
+    .date-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ion-color-primary);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 2;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+  }
+
+  .post-content {
+    padding: 24px;
+    background: var(--ion-background-color, #fff);
+    
+    .post-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      /* Usa el textColor o dark por default */
+      color: var(--ion-text-color, #1e2023); 
+      margin: 0 0 12px;
+      line-height: 1.3;
+    }
+
+    .post-excerpt {
+      font-size: 1rem;
+      color: var(--ion-color-medium);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .read-more {
+      margin-top: 18px;
+      color: var(--ion-color-secondary);
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      
+      ion-icon {
+        margin-left: 6px;
+        transition: transform 0.2s;
+      }
+    }
+  }
+}

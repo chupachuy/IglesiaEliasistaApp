@@ -1,26 +1,31 @@
-import { Component } from '@angular/core';
-import { WordpressService } from '../services/wordpress.service';
-import { Router } from '@angular/router'
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { WordpressService, WpPost } from '../services/wordpress.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
-  posts: any;
+  posts: WpPost[] = [];
+  private destroyRef = inject(DestroyRef);
 
-  constructor(private router:Router, private wordpressService:WordpressService) {}
+  constructor(private router: Router, private wordpressService: WordpressService) {}
 
-  ngOnInit(){
-    this.wordpressService.loadPosts().subscribe(data=>{
-      this.posts = data;
-      //console.log(data)
-    })
+  ngOnInit(): void {
+    this.wordpressService.loadPosts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(data => {
+        this.posts = data;
+      });
   }
-  openPost(id: any){
-    this.router.navigate(['/post/', id])
-  }
 
+  openPost(id: number | undefined): void {
+    if (id !== undefined) {
+      this.router.navigate(['/post/', id]);
+    }
+  }
 }

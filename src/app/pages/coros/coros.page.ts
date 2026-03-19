@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonRange, LoadingController } from '@ionic/angular';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { firstValueFrom } from 'rxjs';
 import { CorosService } from 'src/app/services/coros.service';
 import { Howl } from 'howler';
 
@@ -13,48 +15,54 @@ export interface Track {
   templateUrl: './coros.page.html',
   styleUrls: ['./coros.page.scss'],
 })
-export class CorosPage implements OnInit {
+export class CorosPage implements OnInit, OnDestroy {
 
   playlist: Track[] = [];
-  activeTrack: Track = null as any;
-  player: Howl = null as any;
+  activeTrack: Track | null = null;
+  player: Howl | null = null;
   isPlaying = false;
   progress = 0;
 
   @ViewChild('range', { static: false }) range!: IonRange;
   loading: HTMLIonLoadingElement | undefined;
 
+  private progressInterval: ReturnType<typeof setInterval> | null = null;
+  private destroyRef = inject(DestroyRef);
+
   constructor(
     private loadingCtrl: LoadingController,
-    private corosService: CorosService // inyecta el servicio
+    private corosService: CorosService
   ) { }
 
-  ngOnInit() {
-    this.loadCoros(); // Cargar los coros al iniciar el componente
+  ngOnInit(): void {
+    this.loadCoros();
   }
 
-  // Función para cargar los coros desde el servicio
-  async loadCoros() {
-    //this.presentLoading('Cargando coros...');
+  ngOnDestroy(): void {
+    this.clearProgressInterval();
+    this.player?.stop();
+    this.player?.unload();
+  }
+
+  async loadCoros(): Promise<void> {
     try {
-      const corosData = await this.corosService.obtenerCoros().toPromise(); // Obtén los datos de la API
-      if (corosData && Array.isArray(corosData)) {
-        this.playlist = corosData; // Asigna los datos a la playlist solo si la respuesta es un array
-      } else {
-        console.error('No se recibió un array válido de coros.');
+      const corosData = await firstValueFrom(this.corosService.obtenerCoros());
+      if (Array.isArray(corosData)) {
+        this.playlist = corosData;
       }
-      this.loading?.dismiss(); // Oculta el loading una vez que se cargan los datos
     } catch (error) {
       console.error('Error al cargar los coros:', error);
-      this.loading?.dismiss();
     }
   }
 
-  start(track: Track) {
+  start(track: Track): void {
     this.presentLoading('Descargando coro...');
     if (this.player) {
       this.player.stop();
+      this.player.unload();
     }
+    this.clearProgressInterval();
+
     this.player = new Howl({
       src: [track.path],
       html5: true,
@@ -62,16 +70,21 @@ export class CorosPage implements OnInit {
         this.loading?.dismiss();
         this.isPlaying = true;
         this.activeTrack = track;
-        this.updateProgess();
+        this.startProgressInterval();
       },
       onend: () => {
-        console.log('Coro finalizado');
+        this.isPlaying = false;
+        this.clearProgressInterval();
+      },
+      onstop: () => {
+        this.isPlaying = false;
+        this.clearProgressInterval();
       }
     });
     this.player.play();
   }
 
-  togglePlayer(pause: boolean) {
+  togglePlayer(pause: boolean): void {
     this.isPlaying = !pause;
     if (pause) {
       this.player?.pause();
@@ -80,42 +93,46 @@ export class CorosPage implements OnInit {
     }
   }
 
-  next() {
-    let index = this.playlist.indexOf(this.activeTrack);
-    if (index !== this.playlist.length - 1) {
-      this.start(this.playlist[index + 1]);
-    } else {
-      this.start(this.playlist[0]);
-    }
+  next(): void {
+    if (!this.activeTrack) return;
+    const index = this.playlist.indexOf(this.activeTrack);
+    const nextIndex = index < this.playlist.length - 1 ? index + 1 : 0;
+    this.start(this.playlist[nextIndex]);
   }
 
-  prev() {
-    let index = this.playlist.indexOf(this.activeTrack);
-    if (index > 0) {
-      this.start(this.playlist[index - 1]);
-    } else {
-      this.start(this.playlist[this.playlist.length - 1]);
-    }
+  prev(): void {
+    if (!this.activeTrack) return;
+    const index = this.playlist.indexOf(this.activeTrack);
+    const prevIndex = index > 0 ? index - 1 : this.playlist.length - 1;
+    this.start(this.playlist[prevIndex]);
   }
 
-  seek() {
-    let newValue = +this.range.value;
-    let duration = this.player.duration();
+  seek(): void {
+    if (!this.player) return;
+    const newValue = +this.range.value;
+    const duration = this.player.duration();
     this.player.seek(duration * (newValue / 100));
   }
 
-  updateProgess() {
-    let seek = this.player.seek();
-    this.progress = (seek / this.player.duration()) * 100 || 0;
-    setTimeout(() => {
-      this.updateProgess();
+  private startProgressInterval(): void {
+    this.clearProgressInterval();
+    this.progressInterval = setInterval(() => {
+      if (this.player && this.isPlaying) {
+        const seek = this.player.seek() as number;
+        this.progress = (seek / this.player.duration()) * 100 || 0;
+      }
     }, 1000);
   }
 
-  async presentLoading(message: string) {
-    this.loading = await this.loadingCtrl.create({
-      message
-    });
-    return this.loading.present();
+  private clearProgressInterval(): void {
+    if (this.progressInterval !== null) {
+      clearInterval(this.progressInterval);
+      this.progressInterval = null;
+    }
+  }
+
+  async presentLoading(message: string): Promise<void> {
+    this.loading = await this.loadingCtrl.create({ message });
+    await this.loading.present();
   }
 }

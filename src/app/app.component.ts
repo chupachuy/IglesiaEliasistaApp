@@ -1,29 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
+export class AppComponent implements OnInit {
 
-export class AppComponent {
   constructor() {}
-
 
   ngOnInit() {
     this.checkDarkTheme();
   }
-  
 
-  checkDarkTheme (){
+  private checkDarkTheme(): void {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    console.log(prefersDark);
-
-    if( prefersDark.matches){
-      document.body.classList.toggle('dark');
+    if (prefersDark.matches) {
+      document.body.classList.add('dark');
     }
+    // Escuchar cambios en tiempo real
+    prefersDark.addEventListener('change', (e) => {
+      document.body.classList.toggle('dark', e.matches);
+    });
   }
-
 }
-
-
