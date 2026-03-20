@@ -1,0 +1,63 @@
+import { Component, Input } from '@angular/core';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-lyrics-modal',
+  template: `
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-title class="ion-text-center">{{ title }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="close()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="lyrics-content">
+      <div class="lyrics-container">
+        <pre class="lyrics-text">{{ lyrics }}</pre>
+      </div>
+    </ion-content>
+  `,
+  styles: [`
+    ion-toolbar {
+      --background: var(--ion-color-primary);
+      --color: white;
+    }
+    ion-title {
+      font-weight: bold;
+    }
+    .lyrics-content {
+      --background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    .lyrics-container {
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .lyrics-text {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      text-align: center;
+      font-family: 'Georgia', serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #e0e0e0;
+      max-width: 100%;
+    }
+  `],
+  standalone: true,
+  imports: [CommonModule, IonicModule]
+})
+export class LyricsModalComponent {
+  @Input() title: string = '';
+  @Input() lyrics: string = '';
+
+  constructor(private modalController: ModalController) {}
+
+  close(): void {
+    this.modalController.dismiss();
+  }
+}

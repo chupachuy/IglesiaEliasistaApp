@@ -225,6 +225,11 @@ ion-title {
         margin: 0 15px;
     }
 
+    .lyrics-btn {
+        position: absolute;
+        right: 10px;
+    }
+
     .main-play {
         --background: var(--ion-color-secondary);
         --background-activated: var(--ion-color-secondary-shade);

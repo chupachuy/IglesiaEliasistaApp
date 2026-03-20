@@ -1,13 +1,15 @@
 import { Component, DestroyRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonRange, LoadingController } from '@ionic/angular';
+import { IonRange, LoadingController, ModalController } from '@ionic/angular';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { firstValueFrom } from 'rxjs';
 import { CorosService } from 'src/app/services/coros.service';
 import { Howl } from 'howler';
+import { LyricsModalComponent } from './lyrics-modal/lyrics-modal.component';
 
 export interface Track {
   name: string;
   path: string;
+  lyrics?: string;
 }
 
 @Component({
@@ -31,7 +33,8 @@ export class CorosPage implements OnInit, OnDestroy {
 
   constructor(
     private loadingCtrl: LoadingController,
-    private corosService: CorosService
+    private corosService: CorosService,
+    private modalController: ModalController
   ) { }
 
   ngOnInit(): void {
@@ -134,5 +137,17 @@ export class CorosPage implements OnInit, OnDestroy {
   async presentLoading(message: string): Promise<void> {
     this.loading = await this.loadingCtrl.create({ message });
     await this.loading.present();
+  }
+
+  async showLyrics(): Promise<void> {
+    if (!this.activeTrack) return;
+    const modal = await this.modalController.create({
+      component: LyricsModalComponent,
+      componentProps: {
+        title: this.activeTrack.name,
+        lyrics: this.activeTrack.lyrics || 'Letra no disponible'
+      }
+    });
+    await modal.present();
   }
 }

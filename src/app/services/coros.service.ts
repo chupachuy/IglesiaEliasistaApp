@@ -14,10 +14,11 @@ export class CorosService {
   constructor(private clientHttp: HttpClient) { }
 
   obtenerCoros(): Observable<Track[]> {
-    return this.clientHttp.get<{ title: string; url: string }[]>(this.API).pipe(
+    return this.clientHttp.get<{ title: string; url: string; lyrics?: string }[]>(this.API).pipe(
       map(coros => coros.map(coro => ({
         name: coro.title,
-        path: coro.url
+        path: coro.url,
+        lyrics: coro.lyrics || ''
       }))),
       catchError(err => {
         console.error('Error al obtener coros:', err);
