@@ -9,7 +9,7 @@ import { Devocionarios } from './Devocionarios';
 })
 export class DevocionarioService {
 
-  private readonly API = `${environment.apiUrl}/apidevocionario/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=devocionarios`;
 
   constructor(private clientHttp: HttpClient) { }
 

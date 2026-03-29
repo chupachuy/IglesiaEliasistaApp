@@ -9,7 +9,7 @@ import { Evento } from './Eventos';
 })
 export class EventsService {
 
-  private readonly API = `${environment.apiUrl}/api/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=eventos`;
 
   constructor(private clientHttp: HttpClient) { }
 

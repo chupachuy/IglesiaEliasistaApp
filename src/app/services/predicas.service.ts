@@ -9,7 +9,7 @@ import { PRedicas } from './Predicas';
 })
 export class PredicasService {
 
-  private readonly API = `${environment.apiUrl}/apipredicas/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=predicas`;
 
   constructor(private clientHttp: HttpClient) { }
 

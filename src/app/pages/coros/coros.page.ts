@@ -20,10 +20,12 @@ export interface Track {
 export class CorosPage implements OnInit, OnDestroy {
 
   playlist: Track[] = [];
+  filteredPlaylist: Track[] = [];
   activeTrack: Track | null = null;
   player: Howl | null = null;
   isPlaying = false;
   progress = 0;
+  searchQuery = '';
 
   @ViewChild('range', { static: false }) range!: IonRange;
   loading: HTMLIonLoadingElement | undefined;
@@ -52,10 +54,26 @@ export class CorosPage implements OnInit, OnDestroy {
       const corosData = await firstValueFrom(this.corosService.obtenerCoros());
       if (Array.isArray(corosData)) {
         this.playlist = corosData;
+        this.filteredPlaylist = corosData;
       }
     } catch (error) {
       console.error('Error al cargar los coros:', error);
     }
+  }
+
+  onSearch(event: any): void {
+    const query = event.target.value?.toLowerCase() || '';
+    this.searchQuery = query;
+    
+    if (!query.trim()) {
+      this.filteredPlaylist = this.playlist;
+      return;
+    }
+
+    this.filteredPlaylist = this.playlist.filter(track => 
+      track.name.toLowerCase().includes(query) ||
+      (track.lyrics && track.lyrics.toLowerCase().includes(query))
+    );
   }
 
   start(track: Track): void {

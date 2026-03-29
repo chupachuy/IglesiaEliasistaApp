@@ -9,7 +9,7 @@ import { Track } from '../pages/coros/coros.page';
 })
 export class CorosService {
 
-  private readonly API = `${environment.apiUrl}/apicoros/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=coros`;
 
   constructor(private clientHttp: HttpClient) { }
 
@@ -17,7 +17,7 @@ export class CorosService {
     return this.clientHttp.get<{ title: string; url: string; lyrics?: string }[]>(this.API).pipe(
       map(coros => coros.map(coro => ({
         name: coro.title,
-        path: coro.url,
+        path: coro.url ? `${environment.apiUrl}/${coro.url}` : '',
         lyrics: coro.lyrics || ''
       }))),
       catchError(err => {

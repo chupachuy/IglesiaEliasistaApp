@@ -16,19 +16,34 @@
   </div>
 
   <div class="playlist-container">
-    <h3 class="section-title">Lista de Reproducción</h3>
+    <ion-searchbar 
+      [(ngModel)]="searchQuery" 
+      (ionInput)="onSearch($event)"
+      placeholder="Buscar coro o letra..."
+      class="custom-searchbar">
+    </ion-searchbar>
+    
+    <h3 class="section-title">Lista de Reproducción ({{ filteredPlaylist.length }})</h3>
     <ion-list lines="none" class="transparent-list">
-      <ion-item class="track-item" *ngFor="let track of playlist" (click)="start(track)" [class.active-track]="track == activeTrack">
+      <ion-item class="track-item" *ngFor="let track of filteredPlaylist" (click)="start(track)" [class.active-track]="track == activeTrack">
         <div class="track-avatar" slot="start">
           <ion-icon name="musical-notes"></ion-icon>
         </div>
         <ion-label>
           <h2>{{ track.name }}</h2>
-          <p>Coro Eliasista</p>
+          <p *ngIf="track.lyrics" class="has-lyrics">
+            <ion-icon name="document-text"></ion-icon> Con letra
+          </p>
+          <p *ngIf="!track.lyrics">Coro Eliasista</p>
         </ion-label>
         <ion-icon *ngIf="track == activeTrack && isPlaying" class="playing-icon" name="musical-notes" slot="end"></ion-icon>
         <ion-icon *ngIf="track != activeTrack || !isPlaying" name="play-circle-outline" slot="end" class="inactive-icon"></ion-icon>
       </ion-item>
+      
+      <div *ngIf="filteredPlaylist.length === 0" class="no-results">
+        <ion-icon name="search-outline"></ion-icon>
+        <p>No se encontraron coros</p>
+      </div>
     </ion-list>
   </div>
 </ion-content>
@@ -49,22 +64,31 @@
       <ion-range #range [(ngModel)]="progress" max="100" class="custom-range" (touchend)="seek()" (mouseup)="seek()"></ion-range>
     </div>
 
-    <div class="player-controls">
-      <ion-button fill="clear" (click)="prev()" class="ctrl-btn">
-        <ion-icon slot="icon-only" name="play-skip-back"></ion-icon>
-      </ion-button>
+    <div class="player-bottom">
+      <div class="mini-disc" [class.spinning]="isPlaying">
+        <img src="assets/logo.jpg" alt="Coros">
+        <div class="disc-center"></div>
+      </div>
 
-      <ion-button class="main-play" fill="clear" (click)="togglePlayer(isPlaying)">
-        <ion-icon slot="icon-only" [name]="isPlaying ? 'pause' : 'play'"></ion-icon>
-      </ion-button>
+      <div class="player-controls">
+        <ion-button fill="clear" (click)="prev()" class="ctrl-btn">
+          <ion-icon slot="icon-only" name="play-skip-back"></ion-icon>
+        </ion-button>
 
-      <ion-button fill="clear" (click)="next()" class="ctrl-btn">
-        <ion-icon slot="icon-only" name="play-skip-forward"></ion-icon>
-      </ion-button>
+        <ion-button class="main-play" fill="clear" (click)="togglePlayer(isPlaying)">
+          <ion-icon slot="icon-only" [name]="isPlaying ? 'pause' : 'play'"></ion-icon>
+        </ion-button>
 
-      <ion-button fill="clear" (click)="showLyrics()" class="ctrl-btn lyrics-btn">
-        <ion-icon slot="icon-only" name="document-text-outline"></ion-icon>
-      </ion-button>
+        <ion-button fill="clear" (click)="next()" class="ctrl-btn">
+          <ion-icon slot="icon-only" name="play-skip-forward"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="lyrics-button-container">
+        <ion-button fill="clear" (click)="showLyrics()" class="lyrics-btn">
+          <ion-icon slot="icon-only" name="document-text-outline"></ion-icon>
+        </ion-button>
+      </div>
     </div>
   </div>
 </div>

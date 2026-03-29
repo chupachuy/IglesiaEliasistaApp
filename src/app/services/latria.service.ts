@@ -9,7 +9,7 @@ import { Latrias } from './Latrias';
 })
 export class LatriaService {
 
-  private readonly API = `${environment.apiUrl}/apilatria/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=latria`;
 
   constructor(private httpClient: HttpClient) { }
 

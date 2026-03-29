@@ -9,7 +9,7 @@ import { Prayer } from './Prayers';
 })
 export class PrayersService {
 
-  private readonly API = `${environment.apiUrl}/apiprayer/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=oraciones`;
 
   constructor(private clientHttp: HttpClient) { }
 

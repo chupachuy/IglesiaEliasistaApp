@@ -9,7 +9,7 @@ import { Dulias } from './Dulias';
 })
 export class DuliaService {
 
-  private readonly API = `${environment.apiUrl}/apidulia/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=dulia`;
 
   constructor(private clientHttp: HttpClient) { }
 

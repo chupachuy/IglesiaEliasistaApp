@@ -9,7 +9,7 @@ import { Hiperdulias } from './Hiperdulia';
 })
 export class HiperduliaService {
 
-  private readonly API = `${environment.apiUrl}/apihiperdulia/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=hiperdulia`;
 
   constructor(private clientHttp: HttpClient) { }
 

@@ -9,7 +9,7 @@ import { Gacetas } from './Gacetas';
 })
 export class GacetasService {
 
-  private readonly API = `${environment.apiUrl}/apigacetas/`;
+  private readonly API = `${environment.apiUrl}/router.php?endpoint=gacetas`;
 
   constructor(private clientHttp: HttpClient) { }
 
