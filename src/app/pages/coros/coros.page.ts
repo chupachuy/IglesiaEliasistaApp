@@ -26,6 +26,7 @@ export class CorosPage implements OnInit, OnDestroy {
   isPlaying = false;
   progress = 0;
   searchQuery = '';
+  volume = 1;
 
   @ViewChild('range', { static: false }) range!: IonRange;
   loading: HTMLIonLoadingElement | undefined;
@@ -133,6 +134,11 @@ export class CorosPage implements OnInit, OnDestroy {
     const newValue = +this.range.value;
     const duration = this.player.duration();
     this.player.seek(duration * (newValue / 100));
+  }
+
+  setVolume(): void {
+    if (!this.player) return;
+    this.player.volume(this.volume);
   }
 
   private startProgressInterval(): void {

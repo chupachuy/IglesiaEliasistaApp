@@ -223,7 +223,7 @@ ion-title {
 .player-info {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 6px;
 }
 
@@ -235,7 +235,6 @@ ion-title {
     padding: 2px;
     background: linear-gradient(45deg, var(--ion-color-secondary), #fff, var(--ion-color-secondary));
     box-shadow: 0 3px 8px rgba(0,0,0,0.4);
-    margin-right: 10px;
     position: relative;
 
     img {
@@ -346,22 +345,33 @@ ion-title {
     }
 }
 
+.volume-container {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+
+    .volume-icon {
+        color: var(--ion-color-secondary);
+        font-size: 1rem;
+        margin-right: 6px;
+    }
+
+    .volume-range {
+        --bar-background: rgba(255,255,255,0.15);
+        --bar-background-active: var(--ion-color-secondary);
+        --bar-border-radius: 4px;
+        --bar-height: 3px;
+        --knob-background: #fff;
+        --knob-size: 10px;
+        width: 70px;
+        padding: 0;
+    }
+}
+
 .player-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-}
-
-.player-bottom .mini-disc {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    margin-right: 6px;
-    margin-left: 2px;
-}
-
-.player-bottom .mini-disc .disc-center {
-    width: 8px;
-    height: 8px;
+    flex-wrap: nowrap;
 }
