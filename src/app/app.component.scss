@@ -84,3 +84,40 @@ ion-item.menu-item-submenu {
         color: var(--ion-color-primary) !important;
     }
 }
+
+/* Dark Mode Styles */
+body.dark {
+    .menu-header-bg {
+        background: linear-gradient(135deg, #0d2b56 0%, #1a3a6e 100%);
+        
+        &::after {
+            background: radial-gradient(circle, rgba(201,155,77,0.2) 0%, rgba(201,155,77,0) 70%);
+        }
+    }
+
+    .header-content {
+        h2 {
+            color: #e5e7eb;
+        }
+    }
+
+    ion-item.menu-item {
+        --background-hover: rgba(201, 155, 77, 0.08);
+        --background-activated: rgba(201, 155, 77, 0.15);
+        --color: #e5e7eb;
+        
+        ion-icon {
+            color: #c99b4d;
+        }
+    }
+
+    ion-item.menu-item-submenu {
+        ion-icon {
+            color: #9ca3af;
+        }
+    }
+
+    ion-list {
+        background: transparent;
+    }
+}

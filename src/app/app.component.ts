@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -7,20 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() {}
+  isDarkMode: boolean = false;
 
-  ngOnInit() {
-    this.checkDarkTheme();
+  constructor(private themeService: ThemeService) {
+    this.isDarkMode = this.themeService.isDarkMode();
   }
 
-  private checkDarkTheme(): void {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    if (prefersDark.matches) {
-      document.body.classList.add('dark');
-    }
-    // Escuchar cambios en tiempo real
-    prefersDark.addEventListener('change', (e) => {
-      document.body.classList.toggle('dark', e.matches);
-    });
+  ngOnInit() {}
+
+  toggleDarkMode(): void {
+    this.themeService.toggle();
+    this.isDarkMode = this.themeService.isDarkMode();
   }
 }

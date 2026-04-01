@@ -95,5 +95,69 @@ ion-title {
 }
 
 .dark p, .dark ul, .dark ol {
-    color: #fff;
+    color: #e5e7eb;
+}
+
+body.dark {
+    --ion-background-color: #0f0f1a;
+    background: #0f0f1a;
+    
+    ion-content {
+        --background: #0f0f1a;
+    }
+
+    ion-card {
+        background: #1a1a2e;
+        
+        ion-card-content {
+            color: #e5e7eb;
+        }
+    }
+
+    ion-item {
+        --background: transparent;
+        --color: #e5e7eb;
+    }
+
+    ion-label {
+        color: #e5e7eb !important;
+    }
+
+    p, span, h1, h2, h3, h4, h5, h6 {
+        color: #e5e7eb;
+    }
+
+    ion-text {
+        color: #e5e7eb;
+    }
+
+    .post-content {
+        color: #e5e7eb;
+        
+        h3, .post-title {
+            color: #e5e7eb !important;
+        }
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #0d2b56 0%, #1a3a6e 100%);
+    }
+
+    .hero-content {
+        h1 {
+            color: #ffffff;
+        }
+        p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+    }
+
+    ion-toolbar {
+        --background: #1a1a2e;
+        --color: #e5e7eb;
+    }
+
+    .glass-header {
+        background: rgba(26, 26, 46, 0.85);
+    }
 }

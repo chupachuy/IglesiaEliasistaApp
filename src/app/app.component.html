@@ -82,6 +82,10 @@
             <ion-label>Videos Eliasistas</ion-label>
           </ion-item>
         </ion-menu-toggle>
+        <ion-item class="menu-item" (click)="toggleDarkMode()">
+          <ion-icon [name]="isDarkMode ? 'sunny' : 'moon'" slot="start"></ion-icon>
+          <ion-label>{{ isDarkMode ? 'Modo Claro' : 'Modo Noche' }}</ion-label>
+        </ion-item>
         <ion-menu-toggle>
           <ion-item class="menu-item" href="https://www.facebook.com">
             <ion-icon name="logo-facebook" slot="start"></ion-icon>
