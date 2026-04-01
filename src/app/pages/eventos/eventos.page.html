@@ -29,7 +29,7 @@
         <h2 class="event-title">{{ evento.title }}</h2>
         <span class="event-subtitle" *ngIf="evento.invitation">{{ evento.invitation }}</span>
         
-        <div class="event-location">
+        <div class="event-location" *ngIf="evento.place">
           <ion-icon name="location-outline"></ion-icon>
           <p>{{ evento.place }}</p>
         </div>

@@ -1,0 +1,8 @@
+{
+  "/wp-json": {
+    "target": "https://iglesiaeliasista.org.mx",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
