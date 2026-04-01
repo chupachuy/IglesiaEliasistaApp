@@ -17,11 +17,15 @@
 
   <div class="events-container">
     <ion-card class="event-card" *ngFor="let evento of eventos">
-      <div class="event-img-wrapper">
-        <ion-img class="event-img" [src]="evento.image_url || 'assets/logo.jpg'" alt="{{ evento.invitation }}"></ion-img>
-        <div class="date-badge">
-          <ion-icon name="time-outline"></ion-icon>
-          <span>{{ evento.date_event }} | {{ evento.hour_event }}</span>
+      <div class="event-card-content">
+        <!-- Calendario estilo iOS -->
+        <div class="calendar-widget">
+          <div class="calendar-date">{{ evento.date_event }} | {{ evento.hour_event }}</div>
+        </div>
+
+        <!-- Imagen del evento -->
+        <div class="event-img-wrapper">
+          <ion-img class="event-img" [src]="evento.image_url || 'assets/logo.jpg'" alt="{{ evento.invitation }}"></ion-img>
         </div>
       </div>
       

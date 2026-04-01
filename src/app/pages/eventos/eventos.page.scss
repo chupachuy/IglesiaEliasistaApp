@@ -48,12 +48,42 @@ ion-header {
     position: relative;
     box-shadow: 0 12px 32px rgba(13, 43, 86, 0.1) !important;
     background: var(--ion-background-color, #fff);
+    display: flex;
+    flex-direction: column;
+
+    .event-card-content {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      gap: 0;
+    }
+
+    .calendar-widget {
+      width: 35%;
+      background: linear-gradient(135deg, #0099ff, #7b2cbf);
+      padding: 20px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+
+      .calendar-date {
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
 
     .event-img-wrapper {
-      position: relative;
+      width: 65%;
       height: 220px;
-      width: 100%;
       background: rgba(0,0,0,0.02);
+      position: relative;
       
       .event-img {
         width: 100%;
@@ -66,35 +96,13 @@ ion-header {
         position: absolute;
         bottom: 0; left: 0; right: 0;
         height: 80px;
-        background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-      }
-
-      .date-badge {
-        position: absolute;
-        top: 16px;
-        left: 16px;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        padding: 8px 16px;
-        border-radius: 30px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--ion-color-primary);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-
-        ion-icon {
-          font-size: 1.2rem;
-        }
+        background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
       }
     }
 
     .event-content {
       padding: 24px;
+      width: 100%;
       
       .event-title {
         font-size: 1.35rem;
@@ -142,5 +150,9 @@ ion-header {
   }
   .event-card {
     background: #1e2023;
+
+    .calendar-widget {
+      background: linear-gradient(135deg, #0066cc, #5a189a) !important;
+    }
   }
 }

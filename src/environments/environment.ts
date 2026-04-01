@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost/api',
+  apiUrl: 'https://iglesiaeliasista.org.mx/api2026',
   wpApiUrl: 'https://iglesiaeliasista.org.mx/wp-json/wp/v2'
 };
 

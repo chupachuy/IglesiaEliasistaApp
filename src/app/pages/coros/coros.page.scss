@@ -375,3 +375,52 @@ ion-title {
     width: 100%;
     flex-wrap: nowrap;
 }
+
+/* Minimized State */
+.floating-player-wrapper.minimized {
+    .glass-player {
+        padding: 8px 12px;
+    }
+
+    .player-info {
+        margin-bottom: 0;
+    }
+
+    .mini-disc {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+    }
+
+    .player-controls {
+        .ctrl-btn {
+            margin: 0 4px;
+            font-size: 0.9rem;
+        }
+
+        .main-play {
+            width: 32px;
+            height: 32px;
+            margin: 0 4px;
+
+            ion-icon {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+/* Swipe Indicator */
+.swipe-indicator {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+    cursor: grab;
+
+    .swipe-bar {
+        width: 40px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+    }
+}

@@ -27,6 +27,8 @@ export class CorosPage implements OnInit, OnDestroy {
   progress = 0;
   searchQuery = '';
   volume = 1;
+  playerExpanded = true;
+  lastTouchY = 0;
 
   @ViewChild('range', { static: false }) range!: IonRange;
   loading: HTMLIonLoadingElement | undefined;
@@ -173,5 +175,24 @@ export class CorosPage implements OnInit, OnDestroy {
       }
     });
     await modal.present();
+  }
+
+  onPlayerTouchStart(event: TouchEvent): void {
+    this.lastTouchY = event.touches[0].clientY;
+  }
+
+  onPlayerTouchEnd(event: TouchEvent): void {
+    const currentY = event.changedTouches[0].clientY;
+    const diff = currentY - this.lastTouchY;
+    const threshold = 50;
+
+    // Swipe down - minimizar
+    if (diff > threshold) {
+      this.playerExpanded = false;
+    }
+    // Swipe up - expandir
+    else if (diff < -threshold) {
+      this.playerExpanded = true;
+    }
   }
 }
