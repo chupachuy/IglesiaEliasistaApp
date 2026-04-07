@@ -58,6 +58,10 @@
       <div class="swipe-bar"></div>
     </div>
 
+    <ion-button *ngIf="playerExpanded" fill="clear" (click)="stop()" class="close-player">
+      <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+    </ion-button>
+
     <div class="player-info">
       <div class="mini-disc" [class.spinning]="isPlaying">
         <img src="assets/logo.jpg" alt="Coros">

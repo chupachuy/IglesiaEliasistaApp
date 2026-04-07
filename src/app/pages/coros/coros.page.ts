@@ -243,4 +243,17 @@ export class CorosPage implements OnInit, OnDestroy {
       this.playerExpanded = true;
     }
   }
+
+  stop(): void {
+    if (this.player) {
+      this.player.stop();
+      this.player.unload();
+      this.player = null;
+    }
+    this.isPlaying = false;
+    this.activeTrack = null;
+    this.progress = 0;
+    this.clearProgressInterval();
+    this.cdr.detectChanges();
+  }
 }
