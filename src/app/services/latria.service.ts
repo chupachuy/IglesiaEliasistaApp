@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,22 +10,26 @@ import { Latrias } from './Latrias';
 export class LatriaService {
 
   private readonly API = `${environment.apiUrl}/router.php?endpoint=latria`;
-
-  constructor(private httpClient: HttpClient) { }
+  private readonly AUDIO_BASE = 'https://iglesiaeliasista.org.mx/api2026';
+  private httpClient = inject(HttpClient);
 
   obtenerLatrias(): Observable<Latrias[]> {
-    return this.httpClient.get<Latrias[]>(this.API).pipe(
+    return this.httpClient.get<any[]>(this.API).pipe(
       map(latrias => {
-        return latrias.map(lat => {
-          // Si la url es relativa, construir la URL completa usando la base del API
-          if (lat.url && !lat.url.startsWith('http')) {
-            lat.url = `${environment.apiUrl}/${lat.url}`;
+        return (Array.isArray(latrias) ? latrias : []).map(lat => {
+          const mapped: Latrias = {
+            id: lat.id || '',
+            title: lat.title || lat.name || '',
+            description: lat.description || '',
+            url: lat.url || ''
+          };
+          if (mapped.url && !mapped.url.startsWith('http')) {
+            mapped.url = `${this.AUDIO_BASE}/${mapped.url}`;
           }
-          return lat;
+          return mapped;
         });
       }),
       catchError(err => {
-        console.error('Error al obtener latrias:', err);
         return of([]);
       })
     );

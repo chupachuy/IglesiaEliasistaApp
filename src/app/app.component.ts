@@ -1,16 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
 import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonicModule, RouterModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent implements OnInit {
 
   isDarkMode: boolean = false;
+  private themeService = inject(ThemeService);
 
-  constructor(private themeService: ThemeService) {
+  constructor() {
     this.isDarkMode = this.themeService.isDarkMode();
   }
 

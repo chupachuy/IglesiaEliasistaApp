@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -21,8 +21,7 @@ export interface WpPost {
 export class WordpressService {
 
   private readonly url = `${environment.wpApiUrl}/posts`;
-
-  constructor(private httpClient: HttpClient) { }
+  private httpClient = inject(HttpClient);
 
   loadPosts(): Observable<WpPost[]> {
     return this.httpClient.get<WpPost[]>(this.url).pipe(

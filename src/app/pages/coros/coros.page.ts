@@ -1,5 +1,7 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { IonRange, LoadingController, ModalController } from '@ionic/angular';
+import { Component, DestroyRef, OnDestroy, OnInit, ViewChild, inject, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, IonRange, LoadingController, ModalController } from '@ionic/angular';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { firstValueFrom } from 'rxjs';
 import { CorosService } from 'src/app/services/coros.service';
@@ -7,8 +9,10 @@ import { Howl } from 'howler';
 import { LyricsModalComponent } from './lyrics-modal/lyrics-modal.component';
 
 export interface Track {
+  id: string;
   name: string;
   path: string;
+  description?: string;
   lyrics?: string;
 }
 
@@ -16,6 +20,8 @@ export interface Track {
   selector: 'app-coros',
   templateUrl: './coros.page.html',
   styleUrls: ['./coros.page.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonicModule]
 })
 export class CorosPage implements OnInit, OnDestroy {
 
@@ -35,12 +41,12 @@ export class CorosPage implements OnInit, OnDestroy {
 
   private progressInterval: ReturnType<typeof setInterval> | null = null;
   private destroyRef = inject(DestroyRef);
+  private loadingCtrl = inject(LoadingController);
+  private corosService = inject(CorosService);
+  private modalController = inject(ModalController);
+  private cdr = inject(ChangeDetectorRef);
 
-  constructor(
-    private loadingCtrl: LoadingController,
-    private corosService: CorosService,
-    private modalController: ModalController
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.loadCoros();
@@ -55,17 +61,25 @@ export class CorosPage implements OnInit, OnDestroy {
   async loadCoros(): Promise<void> {
     try {
       const corosData = await firstValueFrom(this.corosService.obtenerCoros());
-      if (Array.isArray(corosData)) {
+      if (Array.isArray(corosData) && corosData.length > 0) {
         this.playlist = corosData;
         this.filteredPlaylist = corosData;
+        this.cdr.markForCheck();
+        this.cdr.detectChanges();
+      } else {
+        this.playlist = [];
+        this.filteredPlaylist = [];
+        this.cdr.markForCheck();
       }
     } catch (error) {
-      console.error('Error al cargar los coros:', error);
+      this.playlist = [];
+      this.filteredPlaylist = [];
     }
   }
 
   onSearch(event: any): void {
     const query = event.target.value?.toLowerCase() || '';
+    const normalizedQuery = this.normalizeText(query);
     this.searchQuery = query;
     
     if (!query.trim()) {
@@ -74,14 +88,33 @@ export class CorosPage implements OnInit, OnDestroy {
     }
 
     this.filteredPlaylist = this.playlist.filter(track => 
-      track.name.toLowerCase().includes(query) ||
-      (track.lyrics && track.lyrics.toLowerCase().includes(query))
+      this.normalizeText(track.name).includes(normalizedQuery) ||
+      (track.lyrics && this.normalizeText(track.lyrics).includes(normalizedQuery))
     );
   }
 
+  private normalizeText(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  }
+
   start(track: Track): void {
-    this.presentLoading('Descargando coro...');
+    this.presentLoading('Descargando audio...');
+    const isSameTrack = this.activeTrack?.id === track.id;
+    
     if (this.player) {
+      if (isSameTrack) {
+        if (this.player.playing()) {
+          this.player.pause();
+          this.isPlaying = false;
+        } else {
+          this.player.play();
+          this.isPlaying = true;
+        }
+        return;
+      }
       this.player.stop();
       this.player.unload();
     }
@@ -95,16 +128,24 @@ export class CorosPage implements OnInit, OnDestroy {
         this.isPlaying = true;
         this.activeTrack = track;
         this.startProgressInterval();
+        this.cdr.detectChanges();
       },
       onend: () => {
         this.isPlaying = false;
         this.clearProgressInterval();
+        this.cdr.detectChanges();
       },
       onstop: () => {
         this.isPlaying = false;
         this.clearProgressInterval();
+        this.cdr.detectChanges();
+      },
+      onloaderror: (_id: number, error: unknown) => {
+        this.loading?.dismiss();
+        console.error('Error cargando audio:', error);
       }
     });
+
     this.player.play();
   }
 
@@ -161,7 +202,14 @@ export class CorosPage implements OnInit, OnDestroy {
   }
 
   async presentLoading(message: string): Promise<void> {
-    this.loading = await this.loadingCtrl.create({ message });
+    this.loading = await this.loadingCtrl.create({
+      message,
+      spinner: 'crescent',
+      cssClass: 'custom-ios-loading',
+      duration: 15000,
+      showBackdrop: true,
+      backdropDismiss: true
+    });
     await this.loading.present();
   }
 

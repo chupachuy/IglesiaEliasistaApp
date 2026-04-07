@@ -1,5 +1,5 @@
 export interface Prayer {
-  id: number;
+  id: string;
   title_pray: string;
   description_pray: string;
   subject_pray: string;

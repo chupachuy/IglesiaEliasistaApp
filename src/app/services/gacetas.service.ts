@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,22 +10,25 @@ import { Gacetas } from './Gacetas';
 export class GacetasService {
 
   private readonly API = `${environment.apiUrl}/router.php?endpoint=gacetas`;
-
-  constructor(private clientHttp: HttpClient) { }
+  private clientHttp = inject(HttpClient);
 
   obtenerGacetas(): Observable<Gacetas[]> {
-    return this.clientHttp.get<Gacetas[]>(this.API).pipe(
+    return this.clientHttp.get<any[]>(this.API).pipe(
       map(gacetas => {
-        return gacetas.map(gaceta => {
-          // Si la url es relativa, construir la URL completa usando la base del API
-          if (gaceta.url && !gaceta.url.startsWith('http')) {
-            gaceta.url = `${environment.apiUrl}/${gaceta.url}`;
+        return (Array.isArray(gacetas) ? gacetas : []).map(gaceta => {
+          const mapped: Gacetas = {
+            id: gaceta.id || '',
+            name: gaceta.name || gaceta.title || '',
+            date: gaceta.date || '',
+            url: gaceta.url || ''
+          };
+          if (mapped.url && !mapped.url.startsWith('http')) {
+            mapped.url = `${environment.apiUrl}/${mapped.url}`;
           }
-          return gaceta;
+          return mapped;
         });
       }),
-      catchError(err => {
-        console.error('Error al obtener gacetas:', err);
+      catchError((err: any) => {
         return of([]);
       })
     );

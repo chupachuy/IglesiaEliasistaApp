@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,22 +10,25 @@ import { Devocionarios } from './Devocionarios';
 export class DevocionarioService {
 
   private readonly API = `${environment.apiUrl}/router.php?endpoint=devocionarios`;
-
-  constructor(private clientHttp: HttpClient) { }
+  private clientHttp = inject(HttpClient);
 
   obtenerDevocionarios(): Observable<Devocionarios[]> {
-    return this.clientHttp.get<Devocionarios[]>(this.API).pipe(
+    return this.clientHttp.get<any[]>(this.API).pipe(
       map(devocionarios => {
-        return devocionarios.map(dev => {
-          // Si la url es relativa, construir la URL completa usando la base del API
-          if (dev.url && !dev.url.startsWith('http')) {
-            dev.url = `${environment.apiUrl}/${dev.url}`;
+        return (Array.isArray(devocionarios) ? devocionarios : []).map(dev => {
+          const mapped: Devocionarios = {
+            id: dev.id || '',
+            title: dev.title || dev.name || '',
+            description: dev.description || '',
+            url: dev.url || ''
+          };
+          if (mapped.url && !mapped.url.startsWith('http')) {
+            mapped.url = `${environment.apiUrl}/${mapped.url}`;
           }
-          return dev;
+          return mapped;
         });
       }),
       catchError(err => {
-        console.error('Error al obtener devocionarios:', err);
         return of([]);
       })
     );

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,22 +10,27 @@ import { Hiperdulias } from './Hiperdulia';
 export class HiperduliaService {
 
   private readonly API = `${environment.apiUrl}/router.php?endpoint=hiperdulia`;
-
-  constructor(private clientHttp: HttpClient) { }
+  private readonly AUDIO_BASE = 'https://iglesiaeliasista.org.mx/api2026';
+  private clientHttp = inject(HttpClient);
 
   obtenerHiperdulias(): Observable<Hiperdulias[]> {
-    return this.clientHttp.get<Hiperdulias[]>(this.API).pipe(
+    return this.clientHttp.get<any[]>(this.API).pipe(
       map(hiperdulias => {
-        return hiperdulias.map(hip => {
-          // Si la url es relativa, construir la URL completa usando la base del API
-          if (hip.url && !hip.url.startsWith('http')) {
-            hip.url = `${environment.apiUrl}/${hip.url}`;
+        console.log('Service - Datos crudos:', hiperdulias);
+        return (Array.isArray(hiperdulias) ? hiperdulias : []).map(hip => {
+          const mapped: Hiperdulias = {
+            id: hip.id || '',
+            title: hip.title || hip.name || '',
+            description: hip.description || '',
+            url: hip.url || ''
+          };
+          if (mapped.url && !mapped.url.startsWith('http')) {
+            mapped.url = `${this.AUDIO_BASE}/${mapped.url}`;
           }
-          return hip;
+          return mapped;
         });
       }),
       catchError(err => {
-        console.error('Error al obtener hiperdulias:', err);
         return of([]);
       })
     );

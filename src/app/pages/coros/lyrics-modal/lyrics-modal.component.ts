@@ -16,8 +16,19 @@ import { CommonModule } from '@angular/common';
       </ion-toolbar>
     </ion-header>
     <ion-content class="lyrics-content">
+      <div class="font-controls">
+        <ion-button size="small" (click)="decreaseFont()">
+          <ion-icon name="remove-circle"></ion-icon>
+        </ion-button>
+        <ion-button size="small" (click)="resetFont()">
+          <ion-icon name="refresh"></ion-icon>
+        </ion-button>
+        <ion-button size="small" (click)="increaseFont()">
+          <ion-icon name="add-circle"></ion-icon>
+        </ion-button>
+      </div>
       <div class="lyrics-container">
-        <pre class="lyrics-text">{{ lyrics }}</pre>
+        <pre class="lyrics-text" [style.font-size.px]="fontSize">{{ lyrics }}</pre>
       </div>
     </ion-content>
   `,
@@ -32,6 +43,12 @@ import { CommonModule } from '@angular/common';
     .lyrics-content {
       --background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     }
+    .font-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+    }
     .lyrics-container {
       padding: 20px;
       display: flex;
@@ -42,7 +59,6 @@ import { CommonModule } from '@angular/common';
       word-wrap: break-word;
       text-align: center;
       font-family: 'Georgia', serif;
-      font-size: 16px;
       line-height: 1.8;
       color: #e0e0e0;
       max-width: 100%;
@@ -54,8 +70,30 @@ import { CommonModule } from '@angular/common';
 export class LyricsModalComponent {
   @Input() title: string = '';
   @Input() lyrics: string = '';
+  
+  fontSize: number = 16;
+  private readonly minFontSize: number = 10;
+  private readonly maxFontSize: number = 40;
+  private readonly defaultFontSize: number = 16;
+  private readonly fontStep: number = 2;
 
   constructor(private modalController: ModalController) {}
+
+  increaseFont(): void {
+    if (this.fontSize < this.maxFontSize) {
+      this.fontSize += this.fontStep;
+    }
+  }
+
+  decreaseFont(): void {
+    if (this.fontSize > this.minFontSize) {
+      this.fontSize -= this.fontStep;
+    }
+  }
+
+  resetFont(): void {
+    this.fontSize = this.defaultFontSize;
+  }
 
   close(): void {
     this.modalController.dismiss();

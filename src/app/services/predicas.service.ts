@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -10,22 +10,25 @@ import { PRedicas } from './Predicas';
 export class PredicasService {
 
   private readonly API = `${environment.apiUrl}/router.php?endpoint=predicas`;
-
-  constructor(private clientHttp: HttpClient) { }
+  private clientHttp = inject(HttpClient);
 
   obtenerPredicas(): Observable<PRedicas[]> {
-    return this.clientHttp.get<PRedicas[]>(this.API).pipe(
+    return this.clientHttp.get<any[]>(this.API).pipe(
       map(predicas => {
-        return predicas.map(pred => {
-          // Si la url es relativa, construir la URL completa usando la base del API
-          if (pred.url && !pred.url.startsWith('http')) {
-            pred.url = `${environment.apiUrl}/${pred.url}`;
+        return (Array.isArray(predicas) ? predicas : []).map(pred => {
+          const mapped: PRedicas = {
+            id: pred.id || '',
+            title: pred.title || pred.name || '',
+            description: pred.description || '',
+            url: pred.url || ''
+          };
+          if (mapped.url && !mapped.url.startsWith('http')) {
+            mapped.url = `${environment.apiUrl}/${mapped.url}`;
           }
-          return pred;
+          return mapped;
         });
       }),
       catchError(err => {
-        console.error('Error al obtener predicas:', err);
         return of([]);
       })
     );

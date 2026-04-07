@@ -15,7 +15,12 @@
     </div>
   </div>
 
-  <div class="events-container">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="dots"></ion-spinner>
+    <p>Cargando eventos...</p>
+  </div>
+
+  <div class="events-container" *ngIf="!loading">
     <ion-card class="event-card" *ngFor="let evento of eventos">
       <div class="event-card-content">
         <!-- Calendario estilo iOS -->

@@ -4,6 +4,17 @@
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="decreaseFont()">
+        <ion-icon name="remove-circle"></ion-icon>
+      </ion-button>
+      <ion-button (click)="resetFont()">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-button>
+      <ion-button (click)="increaseFont()">
+        <ion-icon name="add-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
   
@@ -16,37 +27,28 @@
     </div>
   </div>
 
-  <div class="prayers-container">
-    <div class="prayer-card" *ngFor="let pray of prayers">
-      
-      <div class="prayer-header">
-        <h2 class="prayer-title">{{pray.title_pray}}</h2>
-        <span class="prayer-subject">{{pray.subject_pray}}</span>
-      </div>
-      
-      <h3 class="prayer-desc" *ngIf="pray.description_pray">{{pray.description_pray}}</h3>
-      
-      <div class="prayer-meta">
-        <div class="meta-item">
-          <ion-icon name="person-outline"></ion-icon>
-          <span><strong>De:</strong> {{pray.pray_for}}</span>
-        </div>
-        <div class="meta-item">
-          <ion-icon name="send-outline"></ion-icon>
-          <span><strong>Para:</strong> {{pray.pray_to}}</span>
-        </div>
-        <div class="meta-item">
-          <ion-icon name="calendar-outline"></ion-icon>
-          <span><strong>Día:</strong> {{pray.date_pray}}</span>
-        </div>
-      </div>
-      
-      <div class="prayer-lyrics">
-        <div class="quote-marks">❝</div>
-        <p>{{pray.lyrics_pray}}</p>
-        <div class="quote-marks right">❞</div>
-      </div>
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="dots"></ion-spinner>
+    <p>Cargando oraciones...</p>
+  </div>
 
+  <div class="prayers-container" *ngIf="!loading">
+    <div class="prayer-card" *ngFor="let pray of prayers">
+      <h2 class="prayer-title">{{pray.title_pray}}</h2>
+      <p class="prayer-subject"><strong>Asunto:</strong> {{pray.subject_pray}}</p>
+      <p class="prayer-description" [style.font-size.px]="fontSize">{{pray.description_pray}}</p>
+      <div class="prayer-details">
+        <p><strong>Peticionario:</strong> {{pray.pray_for}}</p>
+        <p><strong>Para:</strong> {{pray.pray_to}}</p>
+        <p><strong>Fecha:</strong> {{pray.date_pray}}</p>
+      </div>
+      <div class="prayer-lyrics" *ngIf="pray.lyrics_pray">
+        <p [style.font-size.px]="fontSize">{{pray.lyrics_pray}}</p>
+      </div>
+    </div>
+    
+    <div *ngIf="!prayers || prayers.length === 0" class="empty-state">
+      <p>No hay oraciones disponibles</p>
     </div>
   </div>
 </ion-content>

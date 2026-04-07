@@ -24,27 +24,29 @@
     </ion-searchbar>
     
     <h3 class="section-title">Lista de Reproducción ({{ filteredPlaylist.length }})</h3>
-    <ion-list lines="none" class="transparent-list">
-      <ion-item class="track-item" *ngFor="let track of filteredPlaylist" (click)="start(track)" [class.active-track]="track == activeTrack">
-        <div class="track-avatar" slot="start">
+    <div class="transparent-list">
+      <div class="track-item" *ngFor="let track of filteredPlaylist" (click)="start(track)" [class.active-track]="track == activeTrack">
+        <div class="track-avatar">
           <ion-icon name="musical-notes"></ion-icon>
         </div>
-        <ion-label>
+        <div class="track-label">
           <h2>{{ track.name }}</h2>
           <p *ngIf="track.lyrics" class="has-lyrics">
             <ion-icon name="document-text"></ion-icon> Con letra
           </p>
           <p *ngIf="!track.lyrics">Coro Eliasista</p>
-        </ion-label>
-        <ion-icon *ngIf="track == activeTrack && isPlaying" class="playing-icon" name="musical-notes" slot="end"></ion-icon>
-        <ion-icon *ngIf="track != activeTrack || !isPlaying" name="play-circle-outline" slot="end" class="inactive-icon"></ion-icon>
-      </ion-item>
+        </div>
+        <div class="track-icon">
+          <ion-icon *ngIf="track == activeTrack && isPlaying" class="playing-icon" name="musical-notes"></ion-icon>
+          <ion-icon *ngIf="track != activeTrack || !isPlaying" class="inactive-icon" name="play-circle-outline"></ion-icon>
+        </div>
+      </div>
       
       <div *ngIf="filteredPlaylist.length === 0" class="no-results">
         <ion-icon name="search-outline"></ion-icon>
         <p>No se encontraron coros</p>
       </div>
-    </ion-list>
+    </div>
   </div>
 </ion-content>
 

@@ -19,18 +19,24 @@
   <div class="documents-container">
     <h3 class="section-title">Últimas Ediciones</h3>
     
-    <ion-list lines="none" class="transparent-list">
-      <ion-item class="document-tile" *ngFor="let gaceta of Gacetas">
-        <div class="icon-wrapper" slot="start">
+    <!-- Gacetas list using plain divs -->
+    <div class="transparent-list">
+      <div class="document-tile" *ngFor="let gaceta of Gacetas; trackBy: trackByGacetaId">
+        <div class="icon-wrapper">
           <ion-icon name="document-text"></ion-icon>
         </div>
-        <ion-label>
+        <div class="label-content">
           <h2>{{gaceta.name}}</h2>
-        </ion-label>
-        <ion-button slot="end" fill="clear" href="{{gaceta.url}}" target="_blank" class="download-btn">
+          <p class="gaceta-date">{{gaceta.date}}</p>
+        </div>
+        <ion-button slot="end" fill="clear" [href]="gaceta.url" target="_blank" class="download-btn">
           <ion-icon name="download-outline"></ion-icon>
         </ion-button>
-      </ion-item>
-    </ion-list>
+      </div>
+    </div>
+    
+    <div *ngIf="!Gacetas || Gacetas.length === 0" class="empty-state">
+      <p>No hay gacetas disponibles</p>
+    </div>
   </div>
 </ion-content>
