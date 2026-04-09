@@ -69,7 +69,7 @@ ion-title {
 
 /* Playlist Styling */
 .playlist-container {
-    padding: 0 16px 100px; /* space for player */
+    padding: 0 16px calc(100px + env(safe-area-inset-bottom)); /* space for player */
 }
 
 .custom-searchbar {
@@ -219,7 +219,7 @@ ion-title {
 /* Premium Floating Player */
 .floating-player-wrapper {
     position: fixed;
-    bottom: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom));
     left: 5%;
     right: 5%;
     width: 90%;
@@ -329,16 +329,75 @@ ion-title {
     }
 }
 
+.top-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px 4px 12px;
+    width: 100%;
+
+    .spacer {
+        flex: 1;
+    }
+
+    .top-controls {
+        display: flex;
+        gap: 4px;
+
+        ion-button {
+            --color: rgba(255, 255, 255, 0.5);
+            --padding-start: 0;
+            --padding-end: 0;
+            height: 32px;
+            width: 32px;
+            margin: 0;
+
+            &.active {
+                --color: var(--ion-color-secondary);
+            }
+
+            ion-icon {
+                font-size: 1.43rem;
+            }
+        }
+    }
+}
+
+.shuffle-button-inline {
+    display: flex;
+    justify-content: flex-end;
+
+    ion-button {
+        --color: rgba(255, 255, 255, 0.5);
+        --padding-start: 0;
+        --padding-end: 0;
+        height: 24px;
+        width: 24px;
+        margin: 0;
+
+        &.active {
+            --color: var(--ion-color-secondary);
+        }
+
+        ion-icon {
+            font-size: 1rem;
+        }
+    }
+}
+
 .player-controls {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex: 1;
+    margin-left: -5px; /* Offset default element spacing */
 
     .ctrl-btn {
         --color: #fff;
-        font-size: 1rem;
-        margin: 0 8px;
+        --padding-start: 0;
+        --padding-end: 0;
+        font-size: 1.17rem;
+        margin: 0 20px 0 0;
     }
 
     .main-play {
@@ -348,13 +407,13 @@ ion-title {
         --box-shadow: 0 4px 10px rgba(201, 155, 77, 0.5);
         --padding-start: 0;
         --padding-end: 0;
-        width: 40px;
-        height: 40px;
-        margin: 0 8px;
+        width: 36px;
+        height: 36px;
+        margin: 0 20px 0 0;
 
         ion-icon {
             color: #fff;
-            font-size: 1.2rem;
+            font-size: 1.43rem;
             margin: 0;
         }
     }
@@ -376,17 +435,6 @@ ion-title {
     }
 }
 
-.lyrics-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    .lyrics-btn {
-        --color: var(--ion-color-secondary);
-        font-size: 1rem;
-    }
-}
-
 .volume-container {
     display: flex;
     align-items: center;
@@ -405,7 +453,7 @@ ion-title {
         --bar-height: 3px;
         --knob-background: #fff;
         --knob-size: 10px;
-        width: 70px;
+        width: 95px;
         padding: 0;
     }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { ThemeService } from './services/theme.service';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-root',
@@ -26,5 +27,9 @@ export class AppComponent implements OnInit {
   toggleDarkMode(): void {
     this.themeService.toggle();
     this.isDarkMode = this.themeService.isDarkMode();
+  }
+
+  exitApp(): void {
+    App.exitApp();
   }
 }

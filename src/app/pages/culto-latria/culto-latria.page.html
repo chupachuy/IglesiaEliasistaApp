@@ -18,7 +18,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="page-content">
   <ion-card>
     <ion-card-content>
       <p [style.font-size.px]="fontSize">El Culto de Latría es de adoración absoluta y exclusiva al Altísimo. La adoración es el acto máximo de alabanza, culto y pleitesía, mismo que se reserva sólo al Señor y es superior a la veneración que se presta en los Cultos de Hiperdulía y Dulía; venerar es mostrar devoción y/o respeto, reconocer la grandeza y bondades, a través del culto, pero nunca llegar a sobreponer a la Virgen o los Enviados, sobre la figura por encima del Señor, pues ello constituye un acto contrario a Dios.</p>
@@ -43,13 +43,22 @@
     </ion-card-header>
   </ion-card>
 
-  <ion-card *ngFor="let latria of Latrias; let iControl=index">
+  <div *ngIf="!loaded" class="ion-text-center ion-padding">
+    <ion-spinner name="lines"></ion-spinner>
+    <p>Cargando culto de latría...</p>
+  </div>
+  <div *ngIf="error" class="ion-text-center ion-padding">
+    <p>Error al cargar el culto.</p>
+    <ion-button (click)="cargarLatrias()">Reintentar</ion-button>
+  </div>
+
+  <ion-card *ngFor="let lat of Latrias">
     <ion-card-header>
-      <ion-card-title>{{latria.title}}</ion-card-title>
-      <ion-card-subtitle>{{latria.description}}</ion-card-subtitle>
+      <ion-card-title>{{lat.title}}</ion-card-title>
+      <ion-card-subtitle>{{lat.description}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <audio controls src="{{latria.url}}"></audio>
+      <audio controls [src]="lat.url"></audio>
     </ion-card-content>
   </ion-card>
 </ion-content>

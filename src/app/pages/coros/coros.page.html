@@ -53,14 +53,21 @@
 <!-- Premium Floating Player -->
 <div class="floating-player-wrapper" *ngIf="activeTrack" [class.minimized]="!playerExpanded" (touchstart)="onPlayerTouchStart($event)" (touchend)="onPlayerTouchEnd($event)">
   <div class="glass-player">
-    <!-- Swipe Indicator -->
-    <div class="swipe-indicator">
-      <div class="swipe-bar"></div>
+    <!-- Top Controls Row -->
+    <div class="top-controls-row" *ngIf="playerExpanded">
+      <div class="spacer"></div>
+      <div class="top-controls">
+        <ion-button fill="clear" [class.active]="shuffle" (click)="toggleShuffle()">
+          <ion-icon slot="icon-only" name="shuffle"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" (click)="showLyrics()">
+          <ion-icon slot="icon-only" name="document-text-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" (click)="stop()">
+          <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+        </ion-button>
+      </div>
     </div>
-
-    <ion-button *ngIf="playerExpanded" fill="clear" (click)="stop()" class="close-player">
-      <ion-icon slot="icon-only" name="close-circle"></ion-icon>
-    </ion-button>
 
     <div class="player-info">
       <div class="mini-disc" [class.spinning]="isPlaying">
@@ -97,12 +104,6 @@
       <div class="volume-container" *ngIf="playerExpanded">
         <ion-icon [name]="volume === 0 ? 'volume-mute' : (volume < 0.5 ? 'volume-low' : 'volume-high')" class="volume-icon"></ion-icon>
         <ion-range [(ngModel)]="volume" max="1" step="0.1" class="volume-range" (ionChange)="setVolume()"></ion-range>
-      </div>
-
-      <div class="lyrics-button-container" *ngIf="playerExpanded">
-        <ion-button fill="clear" (click)="showLyrics()" class="lyrics-btn">
-          <ion-icon slot="icon-only" name="document-text-outline"></ion-icon>
-        </ion-button>
       </div>
     </div>
   </div>

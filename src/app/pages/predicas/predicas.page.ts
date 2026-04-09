@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -7,14 +7,17 @@ import { PredicasService } from 'src/app/services/predicas.service';
 @Component({
   selector: 'app-predicas',
   templateUrl: './predicas.page.html',
-  styleUrls: ['./predicas.page.scss'],
+  styleUrls: ['predicas.page.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule]
 })
 export class PredicasPage implements OnInit {
 
-  Predicas: any;
+  Predicas: any[] = [];
+  loaded = false;
+  error = false;
   servicePredicas = inject(PredicasService);
+  private cdr = inject(ChangeDetectorRef);
 
   fontSize: number = 16;
   private readonly minFontSize: number = 10;
@@ -22,12 +25,26 @@ export class PredicasPage implements OnInit {
   private readonly defaultFontSize: number = 16;
   private readonly fontStep: number = 2;
 
-  constructor() { }
-
   ngOnInit() {
-    this.servicePredicas.obtenerPredicas().subscribe((respuesta:any) =>{
-      console.log(respuesta);
-      this.Predicas = respuesta;
+    this.cargarPredicas();
+  }
+
+  cargarPredicas() {
+    this.loaded = false;
+    this.error = false;
+    this.servicePredicas.obtenerPredicas().subscribe({
+      next: (data) => {
+        console.log('Datos recibidos:', data);
+        this.Predicas = data;
+        this.loaded = true;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error:', err);
+        this.error = true;
+        this.loaded = true;
+        this.cdr.detectChanges();
+      }
     });
   }
 

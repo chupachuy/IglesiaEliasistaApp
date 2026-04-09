@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Latrias } from './Latrias';
 
@@ -14,7 +14,12 @@ export class LatriaService {
   private httpClient = inject(HttpClient);
 
   obtenerLatrias(): Observable<Latrias[]> {
+    console.log('Fetching latria from:', this.API);
     return this.httpClient.get<any[]>(this.API).pipe(
+      tap({
+        next: (data) => console.log('Latria API response:', data),
+        error: (error) => console.error('Latria API error:', error)
+      }),
       map(latrias => {
         return (Array.isArray(latrias) ? latrias : []).map(lat => {
           const mapped: Latrias = {
@@ -29,7 +34,8 @@ export class LatriaService {
           return mapped;
         });
       }),
-      catchError(err => {
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error fetching latria:', error);
         return of([]);
       })
     );

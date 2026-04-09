@@ -1,7 +1,7 @@
 <ion-app>
   
   <ion-menu menuId="main-menu" content-id="main">
-    <ion-content>
+    <ion-content class="menu-content">
       <div class="menu-header-bg"></div>
       <div class="header-content">
         <img src="assets/logo.jpg" alt="Logo">
@@ -96,6 +96,12 @@
           <ion-item class="menu-item" href="https://iglesiaeliasista.org.mx/">
             <ion-icon name="globe" slot="start"></ion-icon>
             <ion-label>Web Iglesia Eliasista</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item class="menu-item" (click)="exitApp()">
+            <ion-icon name="exit-outline" slot="start"></ion-icon>
+            <ion-label>Salir de la App</ion-label>
           </ion-item>
         </ion-menu-toggle>
       </ion-list>

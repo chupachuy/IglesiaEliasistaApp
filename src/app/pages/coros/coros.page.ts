@@ -35,6 +35,7 @@ export class CorosPage implements OnInit, OnDestroy {
   volume = 1;
   playerExpanded = true;
   lastTouchY = 0;
+  shuffle = false;
 
   @ViewChild('range', { static: false }) range!: IonRange;
   loading: HTMLIonLoadingElement | undefined;
@@ -134,6 +135,7 @@ export class CorosPage implements OnInit, OnDestroy {
         this.isPlaying = false;
         this.clearProgressInterval();
         this.cdr.detectChanges();
+        this.next(); // Autoplay siguiente pista
       },
       onstop: () => {
         this.isPlaying = false;
@@ -160,9 +162,18 @@ export class CorosPage implements OnInit, OnDestroy {
 
   next(): void {
     if (!this.activeTrack) return;
-    const index = this.playlist.indexOf(this.activeTrack);
-    const nextIndex = index < this.playlist.length - 1 ? index + 1 : 0;
-    this.start(this.playlist[nextIndex]);
+    let nextTrack: Track;
+    
+    if (this.shuffle) {
+      const randomIndex = Math.floor(Math.random() * this.playlist.length);
+      nextTrack = this.playlist[randomIndex];
+    } else {
+      const index = this.playlist.indexOf(this.activeTrack);
+      const nextIndex = index < this.playlist.length - 1 ? index + 1 : 0;
+      nextTrack = this.playlist[nextIndex];
+    }
+    
+    this.start(nextTrack);
   }
 
   prev(): void {
@@ -254,6 +265,11 @@ export class CorosPage implements OnInit, OnDestroy {
     this.activeTrack = null;
     this.progress = 0;
     this.clearProgressInterval();
+    this.cdr.detectChanges();
+  }
+
+  toggleShuffle(): void {
+    this.shuffle = !this.shuffle;
     this.cdr.detectChanges();
   }
 }

@@ -19,7 +19,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="page-content">
   <ion-card>
     <ion-card-content>
       <p [style.font-size.px]="fontSize">
@@ -27,13 +27,21 @@
       <p [style.font-size.px]="fontSize">Las enseñanzas que nacen de las prédicas Eliasistas son una gran parte de la doctrina de nuestra Iglesia.</p>
     </ion-card-content>
   </ion-card>
-  <ion-card *ngFor="let predica of Predicas; let iControl=index">
+  <div *ngIf="!loaded" class="ion-text-center ion-padding">
+    <ion-spinner name="lines"></ion-spinner>
+    <p>Cargando predicas...</p>
+  </div>
+  <div *ngIf="error" class="ion-text-center ion-padding">
+    <p>Error al cargar las predicas.</p>
+    <ion-button (click)="cargarPredicas()">Reintentar</ion-button>
+  </div>
+  <ion-card *ngFor="let pred of Predicas">
     <ion-card-header>
-      <ion-card-title>{{predica.title}}</ion-card-title>
-      <ion-card-subtitle>{{predica.description}}</ion-card-subtitle>
+      <ion-card-title>{{pred.title}}</ion-card-title>
+      <ion-card-subtitle>{{pred.description}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <audio controls src="{{predica.url}}"></audio>
+      <audio controls [src]="pred.url"></audio>
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PRedicas } from './Predicas';
 
@@ -13,7 +13,12 @@ export class PredicasService {
   private clientHttp = inject(HttpClient);
 
   obtenerPredicas(): Observable<PRedicas[]> {
+    console.log('Fetching predicas from:', this.API);
     return this.clientHttp.get<any[]>(this.API).pipe(
+      tap({
+        next: (data) => console.log('Predicas API response:', data),
+        error: (error) => console.error('Predicas API error:', error)
+      }),
       map(predicas => {
         return (Array.isArray(predicas) ? predicas : []).map(pred => {
           const mapped: PRedicas = {
@@ -28,7 +33,8 @@ export class PredicasService {
           return mapped;
         });
       }),
-      catchError(err => {
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error fetching predicas:', error);
         return of([]);
       })
     );

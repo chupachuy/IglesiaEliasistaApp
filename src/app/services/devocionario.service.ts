@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Devocionarios } from './Devocionarios';
 
@@ -13,7 +13,12 @@ export class DevocionarioService {
   private clientHttp = inject(HttpClient);
 
   obtenerDevocionarios(): Observable<Devocionarios[]> {
+    console.log('Fetching devocionarios from:', this.API);
     return this.clientHttp.get<any[]>(this.API).pipe(
+      tap({
+        next: (data) => console.log('Devocionarios API response:', data),
+        error: (error) => console.error('Devocionarios API error:', error)
+      }),
       map(devocionarios => {
         return (Array.isArray(devocionarios) ? devocionarios : []).map(dev => {
           const mapped: Devocionarios = {
@@ -28,7 +33,8 @@ export class DevocionarioService {
           return mapped;
         });
       }),
-      catchError(err => {
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error fetching devocionarios:', error);
         return of([]);
       })
     );
