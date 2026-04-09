@@ -34,7 +34,7 @@
 
   <div class="prayers-container" *ngIf="!loading">
     <div class="prayer-card" *ngFor="let pray of prayers">
-      <h2 class="prayer-title">{{pray.title_pray}}</h2>
+      <h2 class="prayer-title"><ion-icon name="heart"></ion-icon> {{pray.title_pray}}</h2>
       <p class="prayer-subject"><strong>Asunto:</strong> {{pray.subject_pray}}</p>
       <p class="prayer-description" [style.font-size.px]="fontSize">{{pray.description_pray}}</p>
       <div class="prayer-details">
@@ -43,6 +43,7 @@
         <p><strong>Fecha:</strong> {{pray.date_pray}}</p>
       </div>
       <div class="prayer-lyrics" *ngIf="pray.lyrics_pray">
+        <ion-icon name="book" class="lyrics-icon"></ion-icon>
         <p [style.font-size.px]="fontSize">{{pray.lyrics_pray}}</p>
       </div>
     </div>
